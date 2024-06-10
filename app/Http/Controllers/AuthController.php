@@ -63,6 +63,7 @@ class AuthController extends Controller
             if ($data['password'] === $user->password) {
                 // Password is correct, log in the user
                 Auth::loginUsingId($user->id);
+                
                 return response()->json(['message' => 'Logged in successfully'], 201);
             } else {
                 // Password is incorrect
