@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Controllers\AuthController;
 
 Route::get('/', function () {
     return view('main');
@@ -9,6 +10,8 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
+
+
 
 Route::get('/add_assignment', function () {
     return view('add_assignment');

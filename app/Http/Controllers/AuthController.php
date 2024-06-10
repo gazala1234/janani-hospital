@@ -12,6 +12,12 @@ use Illuminate\Support\Facades\validator;
 
 class AuthController extends Controller
 {
+    public function index()
+    {
+        $user = Auth::user();
+        return view('dashboard', compact('user'));
+    }
+
     public function register(Request $request)
     {
         // Validate the incoming request
@@ -54,13 +60,13 @@ class AuthController extends Controller
         $data = $validatedData->validated();
 
         // Attempt to find the user by email
-        $user = DB::table('users')
+        $user = DB::table('admin')
                     ->where('email', $data['email'])
                     ->first();
 
         if ($user) {
             // User found, now check password
-            if ($data['password'] === $user->password) {
+            if ($data['password'] === $user->pass) {
                 // Password is correct, log in the user
                 Auth::loginUsingId($user->id);
                 
