@@ -8,7 +8,8 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-});
+})->name('dashboard');
+
 Route::get('/add_assignment', function () {
     return view('add_assignment');
 })->name('add_assignment');
@@ -16,3 +17,10 @@ Route::get('/add_assignment', function () {
 Route::get('/contact', function () {
     return view('contact');
 })->name('contactpage');
+
+Route::get('/login', function () {
+    return view('login');
+});
+Route::get('/login1', function () {
+    return view('register');
+});
