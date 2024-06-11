@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Controllers\AuthController;
 
 Route::get('/', function () {
-    return view('main');
+    return view('login');
 })->name('mainpage');
 
 Route::get('/dashboard', function () {
@@ -19,9 +19,6 @@ Route::get('/contact', function () {
     return view('contact');
 })->name('contactpage');
 
-Route::get('/login', function () {
-    return view('login');
-});
-Route::get('/login1', function () {
+Route::get('/register', function () {
     return view('register');
-});
+})->name('register');
