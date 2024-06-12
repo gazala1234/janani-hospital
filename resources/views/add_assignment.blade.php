@@ -1,8 +1,14 @@
 @extends('navbar')
 @section('maincontent')
-@include('links')
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<center>
+    {{-- our links --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <center>
         <form id="fTable" method="post" action="#" enctype="multipart/form-data">
             <div class="card">
 
@@ -42,8 +48,8 @@
                                 <th rowspan='2'>Academic Year</th>
                                 <th rowspan='2'>Task Name</th>
                                 <th rowspan='2'>Description</th>
-                                <th colspan='2'>Deadline</th>                     
-                                <th rowspan='2'>Upload Document</th>                        
+                                <th colspan='2'>Deadline</th>
+                                <th rowspan='2'>Upload Document</th>
                                 <th rowspan='2'>Add/Delete</th>
                             </tr>
                             <tr style='text-align:center;'>
@@ -67,11 +73,12 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <input type='text' id='task' name='task[]' class='form-control' placeholder='Enter Task Name' required>
+                                    <input type='text' id='task' name='task[]' class='form-control'
+                                        placeholder='Enter Task Name' required>
                                 </td>
 
                                 <td>
-                                    <textarea id='description' name='description[]' class='form-control' placeholder='Enter Description' required></textarea>                               
+                                    <textarea id='description' name='description[]' class='form-control' placeholder='Enter Description' required></textarea>
                                 </td>
 
                                 <td>
@@ -191,9 +198,4 @@
             }
         }
     </script>
-        {{-- our links --}}
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
-        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 @endsection
