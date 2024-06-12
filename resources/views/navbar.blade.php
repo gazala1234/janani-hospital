@@ -277,7 +277,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="components-accordion.html">
+                        <a href="{{ route('view_assignment') }}">
                             <i class="bi bi-table" style="font-size: 13px;"></i><span>View Assignment</span>
                         </a>
                     </li>
