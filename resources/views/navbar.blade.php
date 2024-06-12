@@ -8,10 +8,6 @@
     <meta content="" name="keywords">
     <title>IT CELL</title>
 
-    <!-- Favicons -->
-    {{-- <link href="{{ asset('images/favicon.png') }}" rel="icon">
-    <link href="{{ asset('images/apple-touch-icon.png') }}" rel="apple-touch-icon"> --}}
-
     <!-- Google Fonts -->
     <link href="https://fonts.gstatic.com" rel="preconnect">
     <link
@@ -30,11 +26,9 @@
     <!-- Template Main CSS File -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="{{ asset('css/mainstyle/style.css') }}" rel="stylesheet">
-
 </head>
 
 <body>
-
     <!-- ======= Header ======= -->
     <header id="header" class="header fixed-top d-flex align-items-center">
         <!-- start Logo -->
@@ -159,7 +153,7 @@
 
                         <li class="message-item">
                             <a href="#">
-                                <img src="assets/img/messages-1.jpg" alt="" class="rounded-circle">
+                                {{-- <img src="assets/img/messages-1.jpg" alt="" class="rounded-circle"> --}}
                                 <div>
                                     <h4>Maria Hudson</h4>
                                     <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
@@ -173,7 +167,7 @@
 
                         <li class="message-item">
                             <a href="#">
-                                <img src="assets/img/messages-2.jpg" alt="" class="rounded-circle">
+                                {{-- <img src="assets/img/messages-2.jpg" alt="" class="rounded-circle"> --}}
                                 <div>
                                     <h4>Anna Nelson</h4>
                                     <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
@@ -187,7 +181,7 @@
 
                         <li class="message-item">
                             <a href="#">
-                                <img src="assets/img/messages-3.jpg" alt="" class="rounded-circle">
+                                {{-- <img src="assets/img/messages-3.jpg" alt="" class="rounded-circle"> --}}
                                 <div>
                                     <h4>David Muldon</h4>
                                     <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
@@ -212,13 +206,13 @@
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#"
                         data-bs-toggle="dropdown">
                         <img src="{{ asset('images/profile.png') }}" alt="Profile" class="rounded-circle">
-                        <span class="d-none d-md-block dropdown-toggle ps-2">{{ $user->name }}</span>
+                        <span class="d-none d-md-block dropdown-toggle ps-2">{{ isset($user['name'])? $user['name']: 'Guest' }}</span>
                     </a><!-- End Profile Iamge Icon -->
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                         <li class="dropdown-header">
-                            <h6>{{ $user->name }}</h6>
-                            <span>Employee_Id: {{ $user->eid }}</span>
+                            <h6>{{ session('user') ? session('user')->name : 'Guest' }}</h6>
+                            <span>Employee_Id: {{ session('user') ? session('user')->id : 'No id' }}</span>
                         </li>
                         <li>
                             <hr class="dropdown-divider">

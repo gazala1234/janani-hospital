@@ -4,13 +4,12 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
-    <title>IT CELL</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
-    {{-- add css link file --}}
-    @include('links')
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>IT CELL</title>   
+    {{-- add css link file --}}
+    @include('links')   
 </head>
 
 <body style="background-color: gainsboro;">
@@ -106,7 +105,6 @@
             });
         });
     </script>
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"></script>

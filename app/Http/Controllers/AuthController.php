@@ -52,13 +52,11 @@ class AuthController extends Controller
             'email' => 'required|email',
             'password' => 'required'
         ]);
-
+    
         if($validatedData->fails()){
             return response()->json($validatedData->errors(), 422);           
-        }
-
-        $data = $validatedData->validated();
-
+        }    
+        $data = $validatedData->validated();    
         // Attempt to find the user by email
         $user = DB::table('admin')
                     ->where('email', $data['email'])
@@ -67,10 +65,9 @@ class AuthController extends Controller
         if ($user) {
             // User found, now check password
             if ($data['password'] === $user->pass) {
-                // Password is correct, log in the user
-                Auth::loginUsingId($user->id);
-                
-                return response()->json(['message' => 'Logged in successfully'], 201);
+                // $user = Auth::user(); 
+                // dd($user);
+                return response()->json(['message' => 'Logged in successfully', 'user' => $user], 201);
             } else {
                 // Password is incorrect
                 return response()->json(['error' => 'Incorrect password'], 422);
@@ -80,4 +77,5 @@ class AuthController extends Controller
             return response()->json(['error' => 'User not found with provided email'], 422);
         }
     }
+    
 }
