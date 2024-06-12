@@ -206,13 +206,13 @@
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#"
                         data-bs-toggle="dropdown">
                         <img src="{{ asset('images/profile.png') }}" alt="Profile" class="rounded-circle">
-                        <span class="d-none d-md-block dropdown-toggle ps-2">{{ isset($user['name'])? $user['name']: 'Guest' }}</span>
+                        <span class="d-none d-md-block dropdown-toggle ps-2">Tasmiya Ustad</span>
                     </a><!-- End Profile Iamge Icon -->
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                         <li class="dropdown-header">
-                            <h6>{{ session('user') ? session('user')->name : 'Guest' }}</h6>
-                            <span>Employee_Id: {{ session('user') ? session('user')->id : 'No id' }}</span>
+                            <h6>Tasmiya Ustad</h6>
+                            <span>Employee_Id: 902</span>
                         </li>
                         <li>
                             <hr class="dropdown-divider">
@@ -312,7 +312,7 @@
     <main id="main" class="main">
         <!-- End Page Title -->
         <div class="pagetitle">
-            <h3 class="head text-center"  style="color: rgb(77, 27, 143)"><b>AMETHYST IT SERVICES Pvt Ltd</b></h3>
+            <h3 class="head text-center"  style="color: rgb(16, 47, 131)"><b>AMETHYST IT SERVICES Pvt Ltd</b></h3>
         </div>
         <!-- End Page Title -->
 
@@ -326,7 +326,7 @@
     <!-- ======= Footer ======= -->
     <footer id="footer" class="footer">
         <div class="copyright">
-            &copy; Copyright <strong>NiceAdmin</strong>. All Rights Reserved
+            &copy; Copyright <strong>FlatAdmin</strong>. All Rights Reserved
         </div>
         <div class="credits">
             Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>

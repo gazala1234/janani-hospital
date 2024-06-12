@@ -11,7 +11,6 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
 
-
 Route::get('/add_assignment', function () {
     return view('add_assignment');
 })->name('add_assignment');

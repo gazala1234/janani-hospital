@@ -12,3 +12,4 @@ use App\Http\Controllers\AuthController;
 //Routes Started 
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
+Route::get('/add', [AuthController::class, 'index'])->name('index');
