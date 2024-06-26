@@ -9,7 +9,25 @@ use App\Http\Controllers\AuthController;
 // })->middleware('auth:sanctum');
 
 
-//Routes Started 
-Route::post('/register', [AuthController::class, 'register'])->name('register');
-Route::post('/login', [AuthController::class, 'login'])->name('login');
-Route::get('/add', [AuthController::class, 'index'])->name('index');
+Route::middleware(['web'])->group(function () {
+    // Routes handled by AuthController
+    Route::controller(AuthController::class)->group(function () {
+        Route::get('/register', 'register')->name('register');
+        Route::post('/login', 'login')->name('login');
+    });
+
+    // Routes handled by AssignmentController
+    Route::controller(AssignmentController::class)->group(function () {
+        // Route::get('/register', 'register')->name('register');
+        // Route::post('/login', 'login')->name('login');
+        // Route::get('/add','index')->name('index');
+    });
+
+
+    // Logout route (outside of groups)
+    Route::get('/logout', function (Request $request) {
+        $request->session()->forget(['id', 'name', 'cid', 'did']);
+        $request->session()->flush();
+        return redirect()->route('login');
+    })->name('logout');
+});
