@@ -14,8 +14,7 @@ class AuthController extends Controller
 {
     public function index()
     {
-        $user = Auth::user();
-        return view('dashboard', compact('user'));
+        return view('login');
     }
 
     public function register(Request $request)
@@ -65,7 +64,7 @@ class AuthController extends Controller
         if ($user) {
             // User found, now check password
             if ($data['password'] === $user->pass) {
-                // $user = Auth::user(); 
+                session(['id' => $user->id, 'name' => $user->name, 'cid' => $user->cid, 'did' => $user->did]);
                 // dd($user);
                 return response()->json(['message' => 'Logged in successfully', 'user' => $user], 201);
             } else {
