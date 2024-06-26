@@ -206,13 +206,13 @@
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#"
                         data-bs-toggle="dropdown">
                         <img src="{{ asset('images/profile.png') }}" alt="Profile" class="rounded-circle">
-                        <span class="d-none d-md-block dropdown-toggle ps-2">Tasmiya Ustad</span>
+                        <span class="d-none d-md-block dropdown-toggle ps-2">{{ session('name') }}</span>
                     </a><!-- End Profile Iamge Icon -->
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                         <li class="dropdown-header">
-                            <h6>Tasmiya Ustad</h6>
-                            <span>Employee_Id: 902</span>
+                            <h6>Name: {{ session('name') }}</h6>
+                            <span>Employee_Id: {{ session('id') }}</span>
                         </li>
                         <li>
                             <hr class="dropdown-divider">
@@ -239,7 +239,7 @@
                         </li>
 
                         <li>
-                            <a class="dropdown-item d-flex align-items-center" href="#">
+                            <a class="dropdown-item d-flex align-items-center" href="{{ route('logout') }}">
                                 <i class="bi bi-box-arrow-right"></i>
                                 <span>Sign Out</span>
                             </a>
@@ -289,20 +289,6 @@
                     <i class="bi bi-people-fill" style="font-size: 20px;"></i><span>Contact</span>                   
                 </a>
             </li><!-- End Contact Page Nav -->
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="pages-register.html">
-                    <i class="bi bi-card-list"></i>
-                    <span>Register</span>
-                </a>
-            </li><!-- End Register Page Nav -->
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="pages-login.html">
-                    <i class="bi bi-box-arrow-in-right"></i>
-                    <span>Login</span>
-                </a>
-            </li><!-- End Login Page Nav -->
         </ul>
 
     </aside>
