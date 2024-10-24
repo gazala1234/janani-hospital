@@ -1,15 +1,7 @@
 @extends('navbar')
 
-@section('include-css-links')
-<link rel="stylesheet" href="/resources/demos/style.css">
-<link rel="stylesheet" href="{{ asset('../assets/compiled/css/settings.css') }}">
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.14.0/themes/base/jquery-ui.css">
-@endsection
 
 
-@section('page-heading')
-    Settings
-@endsection
 
 @section('maincontent')
 <div class="container">
