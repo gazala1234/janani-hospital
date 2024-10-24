@@ -1,33 +1,27 @@
 <?php
 
+use App\Http\Controllers\AskDoctorController;
+use App\Http\Controllers\AskSuggestionController;
+use App\Http\Controllers\BabyShowerController;
+use App\Http\Controllers\IntroduceYourselfController;
+use App\Http\Controllers\BookConsultController;
+use App\Http\Controllers\EventsController;
+use App\Http\Controllers\ServicesController;
+use App\Http\Controllers\SettingsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
 
-// Route::get('/user', function (Request $request) {
-//     return $request->user();
-// })->middleware('auth:sanctum');
+Route::get('/user', function (Request $request) {
+    return $request->user();
+})->middleware('auth:sanctum');
 
+Route::apiResource('ask-doctor', AskDoctorController::class);
+Route::apiResource('book-consult', BookConsultController::class);
+Route::apiResource('settings', SettingsController::class);
+Route::apiResource('services', ServicesController::class);
+Route::apiResource('events', EventsController::class);
+Route::apiResource('ask-suggestion', AskSuggestionController::class);
+Route::apiResource('baby-shower', BabyShowerController::class);
+Route::apiResource('introduce-yourself', IntroduceYourselfController::class);
 
-Route::middleware(['web'])->group(function () {
-    // Routes handled by AuthController
-    Route::controller(AuthController::class)->group(function () {
-        Route::get('/register', 'register')->name('register');
-        Route::post('/login', 'login')->name('login');
-    });
-
-    // Routes handled by AssignmentController
-    Route::controller(AssignmentController::class)->group(function () {
-        // Route::get('/register', 'register')->name('register');
-        // Route::post('/login', 'login')->name('login');
-        // Route::get('/add','index')->name('index');
-    });
-
-
-    // Logout route (outside of groups)
-    Route::get('/logout', function (Request $request) {
-        $request->session()->forget(['id', 'name', 'cid', 'did']);
-        $request->session()->flush();
-        return redirect()->route('login');
-    })->name('logout');
-});
+?>

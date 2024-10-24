@@ -389,8 +389,6 @@ h6 {
   box-shadow: 0px 2px 20px rgba(1, 41, 112, 0.1);
   background-color: #fff;
   padding-left: 20px;
-  /* Toggle Sidebar Button */
-  /* Search Bar */
 }
 
 .header .toggle-sidebar-btn {
@@ -402,7 +400,7 @@ h6 {
 
 .header .search-bar {
   min-width: 360px;
-  padding: 0 20px;
+  padding: 10 20px;
 }
 
 @media (max-width: 1199px) {
