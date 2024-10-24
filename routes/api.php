@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AskDoctorController;
 use App\Http\Controllers\AskSuggestionController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BabyShowerController;
 use App\Http\Controllers\IntroduceYourselfController;
 use App\Http\Controllers\BookConsultController;
@@ -14,6 +15,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
+
+// Login & Register routes start
+Route::post('user-auth-login', [AuthController::class,'auth_login']);
+Route::apiResource('user-auth', AuthController::class);
+// Login & Register routes end
 
 Route::apiResource('ask-doctor', AskDoctorController::class);
 Route::apiResource('book-consult', BookConsultController::class);

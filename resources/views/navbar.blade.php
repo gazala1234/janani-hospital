@@ -173,6 +173,36 @@
     <!-- Template Main JS File -->
     <script src="{{ asset('js/mainjs/main.js') }}"></script>
 
+    <script>
+        async function sendAxiosRequest(method, apiEndpoint, data) {
+            let config = {
+                method: method,
+                maxBodyLength: Infinity,
+                url: `${apiEndpoint}`, // Use relative URL, assuming the API is part of the same Laravel app
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer {{ session('token') }}` // Authorization token
+                },
+                data: data
+            };
+
+            try {
+                const response = await axios.request(config);
+                return response;
+            } catch (error) {
+                if (error.response && error.response.status === 401) {
+                    alert('Please login to continue.');
+                    window.location.href = "{{ url('/') }}"; // Use direct relative route to login page
+                } else {
+                    throw error;
+                }
+            }
+        }
+    </script>
+
+    @yield('js_script')
+
 </body>
 
 </html>

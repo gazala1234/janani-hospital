@@ -7,15 +7,16 @@
     <meta content="" name="description">
     <meta content="" name="keywords">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>IT CELL</title>   
+    <title>IT CELL</title>
     {{-- add css link file --}}
-    @include('links')   
+    @include('links')
 </head>
 
 <body style="background-color: gainsboro;">
     <main>
         <div class="container">
-            <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+            <section
+                class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
@@ -29,27 +30,36 @@
                                         {{-- <p class="text-center small">Enter your email & password to login</p> --}}
                                     </div>
 
-                                    <form class="row g-3 needs-validation" id="loginFormElement" method="post" novalidate>
+                                    <form class="row g-3" id="getLoggedIn">
                                         @csrf
                                         <div class="col-12">
-                                            <label for="email" class="form-label">Email</label>
-                                            <div class="input-group has-validation">
-                                                <input type="email" name="email" class="form-control" id="email" placeholder="Enter email" required>
-                                                <div class="invalid-feedback">Please enter your email.</div>
+                                            <div class="form-group">
+                                                <label for="mobile" class="text-muted"><span
+                                                        class="text-danger">*</span> Mobile No</label>
+                                                <input type="text" name="mobile" id="mobile"
+                                                    placeholder="mobile no" class="form-control">
                                             </div>
+                                            <div id="mobileErrorMsg" class="text-danger font-weight-bold"></div>
                                         </div>
 
                                         <div class="col-12">
-                                            <label for="password" class="form-label">Password</label>
-                                            <input type="password" name="password" class="form-control" id="password" placeholder="Enter password" required>
-                                            <div class="invalid-feedback">Please enter your password!</div>
+                                            <div class="form-group">
+                                                <label for="password" class="text-muted"><span
+                                                        class="text-danger">*</span> Password</label>
+                                                <input type="password" name="password" class="form-control"
+                                                    id="password" placeholder="enter password">
+                                            </div>
+                                            <div id="passwordErrorMsg" class="text-danger font-weight-bold"></div>
+
                                         </div>
 
                                         <div class="col-12">
-                                            <button class="btn btn-primary w-100" type="submit" id="lsubmit">Login</button>
+                                            <button class="btn btn-primary w-100" type="submit"
+                                                id="lsubmit">Login</button>
                                         </div>
                                         <div class="col-12">
-                                            <p class="small mb-0">Don't have an account? <a href="{{ route('registerForm') }}">Create an account</a></p>
+                                            <p class="small mb-0">Don't have an account? <a
+                                                    href="{{ route('register') }}">Create an account</a></p>
                                         </div>
                                     </form>
 
@@ -65,50 +75,83 @@
         </div>
     </main><!-- End #main -->
 
-    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+            class="bi bi-arrow-up-short"></i></a>
 
     {{-- javascript code to login --}}
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const form = document.getElementById('loginFormElement');
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> <!-- Include Axios -->
 
-            form.addEventListener('submit', function (e) {
+    <script>
+        async function sendAxiosRequest(method, apiEndpoint, data) {
+            let config = {
+                method: method,
+                maxBodyLength: Infinity,
+                url: `${apiEndpoint}`, // Use relative URL
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer {{ session('token') }}` // Authorization token
+                },
+                data: data
+            };
+
+            try {
+                const response = await axios.request(config);
+                return response;
+            } catch (error) {
+                if (error.response && error.response.status === 401) {
+                    alert('Please login to continue.');
+                    window.location.href = '/login'; // Redirect to login page
+                } else {
+                    throw error;
+                }
+            }
+        }
+
+        $(document).ready(function() {
+            $(document).on('submit', '#getLoggedIn', function(e) {
                 e.preventDefault();
 
-                const email = document.getElementById('email').value;
-                const password = document.getElementById('password').value;
+                let formData = {
+                    mobile: $('#mobile').val(),
+                    password: $('#password').val(),
+                };
 
-                fetch('/api/login', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                    },
-                    body: JSON.stringify({ email, password })
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        return response.json().then(errorData => {
-                            throw errorData;
-                        });
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    window.location.href = "{{ route('dashboard') }}";
-                })
-                .catch(error => {
-                    const errorMessage = Object.values(error).flat().join('\n');
-                    alert(errorMessage);
-                    console.error('Error:', error);
-                });
+                sendAxiosRequest('post', '/api/user-auth-login', formData)
+                    .then(response => {
+                        if (response.data.status) {
+                            window.location.href = "{{ url('/dashboard') }}"; // Adjust URL as needed
+                        } else {
+                            alert(response.data.message);
+                            response.data.status ? location.reload() : '';
+                        }
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        let errorMsgs = error.response.data.errors;
+
+                        for (const errorMsgKey in errorMsgs) {
+                            if (errorMsgs.hasOwnProperty(errorMsgKey)) {
+                                console.log(errorMsgKey, errorMsgs[errorMsgKey]);
+                                $(`#${errorMsgKey}ErrorMsg`).html(errorMsgs[errorMsgKey].join(","));
+                            }
+                        }
+                    });
+            });
+
+            $(document).on('input', '.form-control', function() {
+                let id = $(this).attr('id');
+                let value = $(this).val();
+                value != '' ? $(`#${id}ErrorMsg`).html('') : '';
             });
         });
     </script>
+
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"></script>
-
 </body>
 
 </html>

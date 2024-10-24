@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('email')->unique();
+            $table->bigInteger('mobile')->unsigned(); // Using bigInteger for mobile
             $table->string('password');
+            $table->string('role');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -25,6 +27,5 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('users');
-
     }
 };
