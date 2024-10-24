@@ -211,10 +211,42 @@
     color: #888;
 }
 
+.user-profile .profile img {
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+}
+
 .user-question {
     font-size: 14px;
     color: #333;
     margin-bottom: 10px;
+}
+
+.parent {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+}
+
+.guest {
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    width: 80%; 
+    max-width: 120px;
+    border-radius: 50px;
+    color: white; 
+    background-color: #20948b; 
+    padding: 10px; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
+}
+
+@media (max-width: 600px) {
+    .guest {
+        width: 90%; 
+        font-size: 1rem; 
+    }
 }
 
 .interaction {
@@ -239,13 +271,13 @@
 
 textarea {
     resize: none;
-    padding-right: 60px; 
+    padding-right: 60px;
 }
 
 .comment-tools {
     position: absolute;
-    bottom: 10px; 
-    right: 10px; 
+    bottom: 10px;
+    right: 10px;
 }
 
 .icon-sticker,
