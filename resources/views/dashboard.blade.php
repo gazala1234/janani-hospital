@@ -171,13 +171,30 @@
         <div class="col-12 col-lg-3">
             <div class="card">
                 <div class="card-body py-4 px-4">
-                    <div class="d-flex align-items-center">
-                        <div class="avatar avatar-xl">
-                            <img src="" alt="Face 1">
+                    <div class="d-flex align-items-center user-profile">
+                        <div class="avatar profile avatar-xl">
+                            <img src="../images/profile.jpg" alt="User">
                         </div>
                         <div class="ms-3 name">
-                            <h5 class="font-bold">John Duck</h5>
-                            <h6 class="text-muted mb-0">@johnducky</h6>
+                            <h5 class="font-bold">Guest</h5>
+                            <h6 class="text-muted mb-0">@guestmail</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="parent">
+                    <div class="guest">
+                        Guest
+                    </div>
+                </div>
+                <hr>
+                <div class="bookmarks px-5 py-4">
+                    <div class="d-flex align-items-center user-profile">
+                        <div class="profile">
+                            <i class="fas fa-bookmark" style="font-size: 1.5rem;"></i>
+                        </div>
+                        <div class="ms-3 name">
+                            <h5 class="font-bold">My Bookmarks</h5>
+                            <h6 class="text-muted mb-0">0 items</h6>
                         </div>
                     </div>
                 </div>
@@ -215,7 +232,7 @@
                         </div>
                     </div>
                     <div class="px-4">
-                        <button class='btn btn-block btn-xl btn-outline-primary font-bold mt-3'>Start
+                        <button class='btn btn-block btn-xl btn-primary font-bold mt-3'>Start
                             Conversation</button>
                     </div>
                 </div>

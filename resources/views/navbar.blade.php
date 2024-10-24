@@ -42,7 +42,7 @@
     <header id="header" class="header fixed-top d-flex align-items-center">
         <!-- start Logo -->
         <div class="d-flex align-items-center justify-content-between p-3">
-            <a href="#" class="mx-5">
+            <a href="{{ url('/') }}">
                 <img src="../images/janani-logo.png" class="hospital-logo" alt="Logo" srcset="">
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
@@ -52,7 +52,7 @@
 
     <!-- ======= Sidebar ======= -->
     <aside id="sidebar" class="sidebar">
-        <ul class="sidebar-nav" id="sidebar-nav">
+        <ul class="sidebar-nav mt-4" id="sidebar-nav">
 
             <li class="nav-item">
                 <a class="nav-link" href="{{ url('/') }}">
