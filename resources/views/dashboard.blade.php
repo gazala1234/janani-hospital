@@ -3,6 +3,7 @@
 <link href="{{ asset('css/customfiles/chatting.css') }}" rel="stylesheet">
 
 @section('maincontent')
+<h3 class="mt-3">Overview</h3>
     <!-- Search Bar inside a Card -->
     <div class="card-custom">
         <input type="text" class="form-control search-field" placeholder="What's on your mind?" data-toggle="modal"

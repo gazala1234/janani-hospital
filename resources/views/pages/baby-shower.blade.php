@@ -1,8 +1,9 @@
 @extends('layouts.main')
+
 <link href="{{ asset('css/customfiles/chatting.css') }}" rel="stylesheet">
 
 @section('maincontent')
-    <h2>Virtual Baby Shower</h2>
+    <h3 class="mt-2">Virtual Baby Shower</h3>
     <!-- Search Bar inside a Card -->
     <div class="card-custom">
         <input type="text" class="form-control search-field" placeholder="What's on your mind?" data-toggle="modal"
@@ -15,8 +16,7 @@
             <div class="modal-content">
                 <form id="postForm" enctype="multipart/form-data">
                     <div class="modal-header">
-                        <h5 class="modal-title text-center" id="searchModalLabel">Posting in/ Virtual Baby
-                            Shower</h5>
+                        <h5 class="modal-title text-center" id="searchModalLabel">Posting in/ Virtual Baby Shower</h5>
                         <button type="button" class="close ms-auto" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -123,7 +123,7 @@
     <div class="card post-card">
         <div class="post-header">
             <div class="user-info">
-                <img src="../images/card2.jpg" alt="User Avatar">
+                <img src="../images/profile.jpg" alt="User Avatar">
                 <div>
                     <div class="user-name">Janani Mamas</div>
                     <div class="text-muted">2 months ago</div>
@@ -135,7 +135,7 @@
             <p>Hello everyone!</p>
             <p>Introducing Ekakshra Mahajan Mandhar to our Cloudnine Mamas Community.</p>
             <!-- Photo/Video of the post -->
-            <img src="../images/card1.avif" alt="User's Post Media">
+            <img src="../images/card2.jpg" alt="User's Post Media">
         </div>
 
         <div class="post-actions">

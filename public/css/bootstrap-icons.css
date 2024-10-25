@@ -2694,7 +2694,7 @@
 }
 .bi-list::before {
     color: #20948b;
-    padding-left: 100px;
+    /* padding-left: 40px; */
     content: "\f479";
 }
 .bi-lock-fill::before {

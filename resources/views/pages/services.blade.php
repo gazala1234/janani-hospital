@@ -1,16 +1,9 @@
-@extends('navbar')
+@extends('layouts.main')
 
-@section('include-css-links')
-    <link rel="stylesheet" href="{{ asset('../assets/compiled/css/services.css') }}">
-    {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"> --}}
-@endsection
-
-@section('page-heading')
-    Services
-@endsection
+<link href="{{ asset('css/customfiles/chatting.css') }}" rel="stylesheet">
 
 @section('maincontent')
-    <div class="add-service-container">
+    <div class="add-service-container mt-5">
         <button class="btn-add-service" data-modal-target="modal3">Add Service</button>
     </div>
 
@@ -45,7 +38,7 @@
                     <textarea name="service_description" id="service-description" class="form-control" rows="4" required></textarea>
                 </div>
                 
-                <button type="submit" class="btn btn-primary btn-submit">Create Service</button>
+                <button type="submit" class="btn btn-primary btn-submit my-3">Create Service</button>
             </form>
         </div>        
     </div>

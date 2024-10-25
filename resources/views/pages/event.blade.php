@@ -1,15 +1,9 @@
-@extends('navbar')
+@extends('layouts.main')
 
-@section('include-css-links')
-    <link rel="stylesheet" href="{{ asset('../assets/compiled/css/events.css') }}">
-@endsection
-
-@section('page-heading')
-    Events
-@endsection
+<link href="{{ asset('css/customfiles/chatting.css') }}" rel="stylesheet">
 
 @section('maincontent')
-    <div class="container">
+    <div class="container mt-5">
         <div class="left">
             <div class="calendar">
                 <div class="month">

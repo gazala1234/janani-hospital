@@ -46,7 +46,7 @@
 
 <!-- Live Sessions -->
 <li class="nav-item">
-    <a class="nav-link" href="table.html">
+    <a class="nav-link" href="#">
         <i class="bi bi-camera-video" style="font-size: 20px;"></i><span>Live Sessions</span>
     </a>
 </li><!-- End Live Sessions -->
