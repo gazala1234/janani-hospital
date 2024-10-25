@@ -4,7 +4,7 @@
         Copyright &copy; 2024 <strong>Janani MultiSpeciality Hospital.</strong>
     </div>
     <div class="credits">
-        Made With ❤ <a href="https://bootstrapmade.com/"> Medya Web Technologies</a>
+        Made With ❤ <a href="https://medyawebtech.com/"> Medya Web Technologies</a>
     </div>
 </footer>
 <!-- End Footer -->

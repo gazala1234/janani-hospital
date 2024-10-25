@@ -3,7 +3,7 @@
 <link href="{{ asset('css/customfiles/chatting.css') }}" rel="stylesheet">
 
 @section('maincontent')
-<h3 class="mt-3">Overview</h3>
+    <h3 class="mt-3">Overview</h3>
     <!-- Search Bar inside a Card -->
     <div class="card-custom">
         <input type="text" class="form-control search-field" placeholder="What's on your mind?" data-toggle="modal"
@@ -82,10 +82,146 @@
                     further course. Thanks
                 </p>
 
-                <div class="interaction">
-                    <i class="bi bi-hand-thumbs-up"></i>
-                    <i class="bi bi-chat-dots"></i>
-                    <i class="bi bi-share"></i>
+                <div class="post-actions mt-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="icon me-5"><i class="bi bi-hand-thumbs-up"></i> 2</span>
+                        <span class="icon comment-icon me-5">
+                            <i class="bi bi-chat-dots"></i> 0
+                        </span>
+                        <span class="icon"><i class="bi bi-share"></i></span>
+                    </div>
+
+                    <!-- Dropdown for post options -->
+                    <div class="dropdown">
+                        <button class="btn btn-link" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                            aria-expanded="false">
+                            <i class="fas fa-ellipsis-h"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Bookmark Comment</a>
+                            <a class="dropdown-item" href="#">Report Comment</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Comment box, initially hidden and placed below the icons -->
+                <div class="comment-box mt-3 position-relative" style="display: none; width: 100%;">
+                    <textarea class="form-control" rows="6" placeholder="Add a comment..."
+                        style="width: 100%; padding-right: 60px;"></textarea>
+
+                    <!-- Icons and button positioned inside the comment box -->
+                    <div class="comment-tools d-flex align-items-center"
+                        style="position: absolute; bottom: 10px; left: 10px; right: 10px; display: flex; justify-content: space-between;">
+                        <!-- Left side: Plus and Gallery icons -->
+                        <div class="d-flex">
+                            <span class="icon-sticker me-4" style="cursor: pointer;">
+                                <i class="fas fa-plus"></i>
+                            </span>
+                            <span class="icon-gallery" style="cursor: pointer;">
+                                <i class="fas fa-image"></i>
+                            </span>
+                        </div>
+                        <!-- Right side: Comment button -->
+                        <button class="btn btn-primary">Comment</button>
+                    </div>
+                    <div class="reply-comment">
+                        <h2>Comments</h2>
+                        <div class="user-info">
+                            <div class="profile">
+                                <img src="../images/profile.jpg" alt="User Image" />
+                                <span class="name">Anonymous _</span>
+                            </div>
+                            <span class="time">44 minutes ago</span>
+                        </div>
+
+                        <p class="user-question">
+                            Hello Doctor, I am 17 weeks pregnant. I got my quadruple marker done as suggested by doctor.
+                            The AFP MOM value is 3.1 and NTD screening shows positive. Should I be concerned? Please suggest
+                            further course. Thanks
+                        </p>
+
+                        <div class="post-actions mt-3">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="icon me-5"><i class="bi bi-hand-thumbs-up"></i> 2</span>
+                                <span class="icon comment-icon"><i class="bi bi-reply"></i> 1</span>
+                            </div>
+
+                            <!-- Dropdown for post options -->
+                            <div class="dropdown">
+                                <button class="btn btn-link" type="button" id="dropdownMenuButton"
+                                    data-toggle="dropdown" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-h"></i>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#">Bookmark Comment</a>
+                                    <a class="dropdown-item" href="#">Report Comment</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-content">
+                <div class="user-info">
+                    <div class="profile">
+                        <img src="../images/profile.jpg" alt="User Image" />
+                        <span class="name">Anonymous _</span>
+                    </div>
+                    <span class="time">44 minutes ago</span>
+                </div>
+
+                <p class="user-question">
+                    Hello Doctor, I am 17 weeks pregnant. I got my quadruple marker done as suggested by doctor.
+                    The AFP MOM value is 3.1 and NTD screening shows positive. Should I be concerned? Please suggest
+                    further course. Thanks
+                </p>
+
+                <div class="post-actions mt-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="icon me-5"><i class="bi bi-hand-thumbs-up"></i> 2</span>
+                        <span class="icon comment-icon me-5">
+                            <i class="bi bi-chat-dots"></i> 0
+                        </span>
+                        <span class="icon"><i class="bi bi-share"></i></span>
+                    </div>
+
+                    <!-- Dropdown for post options -->
+                    <div class="dropdown">
+                        <button class="btn btn-link" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                            aria-expanded="false">
+                            <i class="fas fa-ellipsis-h"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Bookmark Comment</a>
+                            <a class="dropdown-item" href="#">Report Comment</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Comment box, initially hidden and placed below the icons -->
+                <div class="comment-box mt-3 position-relative" style="display: none; width: 100%;">
+                    <textarea class="form-control" rows="6" placeholder="Add a comment..."
+                        style="width: 100%; padding-right: 60px;"></textarea>
+
+                    <!-- Icons and button positioned inside the comment box -->
+                    <div class="comment-tools d-flex align-items-center"
+                        style="position: absolute; bottom: 10px; left: 10px; right: 10px; display: flex; justify-content: space-between;">
+                        <!-- Left side: Plus and Gallery icons -->
+                        <div class="d-flex">
+                            <span class="icon-sticker me-4" style="cursor: pointer;">
+                                <i class="fas fa-plus"></i>
+                            </span>
+                            <span class="icon-gallery" style="cursor: pointer;">
+                                <i class="fas fa-image"></i>
+                            </span>
+                        </div>
+                        <!-- Right side: Comment button -->
+                        <button class="btn btn-primary">Comment</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -106,10 +242,48 @@
                     further course. Thanks
                 </p>
 
-                <div class="interaction">
-                    <i class="bi bi-hand-thumbs-up"></i>
-                    <i class="bi bi-chat-dots"></i>
-                    <i class="bi bi-share"></i>
+                <div class="post-actions mt-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="icon me-5"><i class="bi bi-hand-thumbs-up"></i> 2</span>
+                        <span class="icon comment-icon me-5">
+                            <i class="bi bi-chat-dots"></i> 0
+                        </span>
+                        <span class="icon"><i class="bi bi-share"></i></span>
+                    </div>
+
+                    <!-- Dropdown for post options -->
+                    <div class="dropdown">
+                        <button class="btn btn-link" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                            aria-expanded="false">
+                            <i class="fas fa-ellipsis-h"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Bookmark Comment</a>
+                            <a class="dropdown-item" href="#">Report Comment</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Comment box, initially hidden and placed below the icons -->
+                <div class="comment-box mt-3 position-relative" style="display: none; width: 100%;">
+                    <textarea class="form-control" rows="6" placeholder="Add a comment..."
+                        style="width: 100%; padding-right: 60px;"></textarea>
+
+                    <!-- Icons and button positioned inside the comment box -->
+                    <div class="comment-tools d-flex align-items-center"
+                        style="position: absolute; bottom: 10px; left: 10px; right: 10px; display: flex; justify-content: space-between;">
+                        <!-- Left side: Plus and Gallery icons -->
+                        <div class="d-flex">
+                            <span class="icon-sticker me-4" style="cursor: pointer;">
+                                <i class="fas fa-plus"></i>
+                            </span>
+                            <span class="icon-gallery" style="cursor: pointer;">
+                                <i class="fas fa-image"></i>
+                            </span>
+                        </div>
+                        <!-- Right side: Comment button -->
+                        <button class="btn btn-primary">Comment</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -130,34 +304,48 @@
                     further course. Thanks
                 </p>
 
-                <div class="interaction">
-                    <i class="bi bi-hand-thumbs-up"></i>
-                    <i class="bi bi-chat-dots"></i>
-                    <i class="bi bi-share"></i>
-                </div>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-content">
-                <div class="user-info">
-                    <div class="profile">
-                        <img src="../images/profile.jpg" alt="User Image" />
-                        <span class="name">Anonymous _</span>
+                <div class="post-actions mt-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="icon me-5"><i class="bi bi-hand-thumbs-up"></i> 2</span>
+                        <span class="icon comment-icon me-5">
+                            <i class="bi bi-chat-dots"></i> 0
+                        </span>
+                        <span class="icon"><i class="bi bi-share"></i></span>
                     </div>
-                    <span class="time">44 minutes ago</span>
+
+                    <!-- Dropdown for post options -->
+                    <div class="dropdown">
+                        <button class="btn btn-link" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                            aria-expanded="false">
+                            <i class="fas fa-ellipsis-h"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Bookmark Comment</a>
+                            <a class="dropdown-item" href="#">Report Comment</a>
+                        </div>
+                    </div>
                 </div>
 
-                <p class="user-question">
-                    Hello Doctor, I am 17 weeks pregnant. I got my quadruple marker done as suggested by doctor.
-                    The AFP MOM value is 3.1 and NTD screening shows positive. Should I be concerned? Please suggest
-                    further course. Thanks
-                </p>
+                <!-- Comment box, initially hidden and placed below the icons -->
+                <div class="comment-box mt-3 position-relative" style="display: none; width: 100%;">
+                    <textarea class="form-control" rows="6" placeholder="Add a comment..."
+                        style="width: 100%; padding-right: 60px;"></textarea>
 
-                <div class="interaction">
-                    <i class="bi bi-hand-thumbs-up"></i>
-                    <i class="bi bi-chat-dots"></i>
-                    <i class="bi bi-share"></i>
+                    <!-- Icons and button positioned inside the comment box -->
+                    <div class="comment-tools d-flex align-items-center"
+                        style="position: absolute; bottom: 10px; left: 10px; right: 10px; display: flex; justify-content: space-between;">
+                        <!-- Left side: Plus and Gallery icons -->
+                        <div class="d-flex">
+                            <span class="icon-sticker me-4" style="cursor: pointer;">
+                                <i class="fas fa-plus"></i>
+                            </span>
+                            <span class="icon-gallery" style="cursor: pointer;">
+                                <i class="fas fa-image"></i>
+                            </span>
+                        </div>
+                        <!-- Right side: Comment button -->
+                        <button class="btn btn-primary">Comment</button>
+                    </div>
                 </div>
             </div>
         </div>

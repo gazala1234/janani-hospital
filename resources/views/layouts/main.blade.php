@@ -30,6 +30,26 @@
     <link href="{{ asset('css/mainstyle/style.css') }}" rel="stylesheet">
 </head>
 <style>
+    /* CSS for small mobile screens */
+    @media (max-width: 320px) {
+        .small-btn {
+            font-size: 0.8rem;
+            /* Reduce font size */
+            padding: 0.3rem 0.6rem;
+            /* Adjust padding */
+        }
+
+        .small-icon {
+            font-size: 1.2rem;
+            /* Reduce size of the icon */
+        }
+
+        .header {
+            padding: 1rem;
+            /* Adjust header padding if necessary */
+        }
+    }
+
     .recent-message {
         align-items: center;
     }
@@ -57,36 +77,68 @@
         }
 
         h3 {
-            font-size: 1rem;
+            font-size: 0.5rem;
         }
     }
 </style>
 
 <body>
     <!-- ======= Header ======= -->
-    <header id="header" class="header fixed-top d-flex align-items-center justify-content-between p-3">
+    <header id="header" class="header fixed-top d-flex align-items-center p-3">
         <div class="container-fluid">
-            <div class="row align-items-center">
+            <div class="d-flex align-items-center justify-content-between w-100">
                 <!-- Logo Section -->
-                <div class="col-3 col-md-2 d-flex justify-content-center">
+                <div class="d-flex col-md-2 justify-content-center">
                     <a href="{{ url('/dashboard') }}">
                         <img src="../images/janani-logo.png" class="hospital-logo" alt="Logo">
                     </a>
                 </div>
 
                 <!-- Sidebar Toggle Section -->
-                <div class="col-3 col-md-2">
-                    <i class="bi bi-list toggle-sidebar-btn"></i>
+                <div class="col-1">
+                    <i class="bi bi-list toggle-sidebar-btn small-icon"></i> <!-- Added small-icon class -->
                 </div>
 
-                <div class="col-6 text-center">
-                    <h3 class="my-0">JANANI - MULTISPECIALITY HOSPITAL</h3>
+                <!-- Sidebar Toggle and Title Section -->
+                <div class="d-flex flex-grow-1 align-items-center justify-content-center text-center">
+                    <h3 class="my-0 d-none d-md-block">JANANI - MULTISPECIALITY HOSPITAL</h3> <!-- Hidden on mobile -->
                 </div>
 
-                <div class="col-md-2">
-                    <a href="{{ route('register') }}" class="text-decoration-none">
-                        <button type="button" class="btn btn-outline-primary">Signin</button>
-                    </a>
+                <!-- Signin and Profile Sections -->
+                <div class="d-flex align-items-center">
+                    <div class="me-3">
+                        <a href="{{ route('register') }}" class="text-decoration-none me-3">
+                            <button type="button" class="btn btn-outline-primary small-btn">Signin</button>
+                            <!-- Added small-btn class -->
+                        </a>
+                    </div>
+                    <div class="dropdown">
+                        <a href="#" class="d-flex align-items-center text-decoration-none" id="profileDropdown"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="../images/profile.jpg" alt="Profile Logo" class="rounded-circle" width="60"
+                                height="60">
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                            <li>
+                                <a class="dropdown-item" href="{{ url('api/profile') }}">
+                                    <i class="bi bi-person-circle me-2"></i> View Profile
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ url('api/settings') }}">
+                                    <i class="bi bi-gear me-2"></i> Settings
+                                </a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">
+                                    <i class="bi bi-box-arrow-right me-2"></i> Signout
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -198,3 +250,23 @@
     <!-- End #main -->
 
     @include('layouts.footer')
+
+
+    {{-- <div class="col-6 col-md-4 col-lg-3">
+        <div class="row align-items-center">
+            <!-- Sidebar Toggle Section -->
+            <div class="col-2 text-center">
+                <i class="bi bi-list toggle-sidebar-btn"></i>
+            </div>
+    
+            <!-- Search Bar Section -->
+            <div class="col-10 mt-3">
+                <form class="search-form d-flex align-items-center" method="POST" action="#">
+                    <input type="text" name="query" class="form-control me-2" placeholder="Search" title="Enter search keyword">
+                    <button type="submit" class="btn btn-outline-secondary" title="Search">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div> --}}
