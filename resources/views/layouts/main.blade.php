@@ -110,17 +110,25 @@
                 </div>
                 <div class="col-12 col-lg-3 mt-5">
                     <div class="card">
-                        <a href="{{ url('api/profile') }}" class="text-decoration-none">
-                            <div class="card-body py-4 px-4">
-                                <div class="d-flex align-items-center user-profile">
-                                    <div class="profile">
-                                        <img src="../images/profile.jpg" alt="User">
-                                    </div>
-                                    <div class="ms-3 name">
+                        <div class="card-body py-4 px-4">
+                            <div class="d-flex align-items-center user-profile">
+                                <div class="avatar profile avatar-xl">
+                                    <img src="../images/profile.jpg" alt="User">
+                                </div>
+                                <div class="ms-3 name">
+                                    @if (auth()->check())
+                                        <h5 class="font-bold">
+                                            {{ auth()->user()->userDetail->name ?? 'Patient' }}
+                                        </h5>
+                                        <h6 class="text-muted mb-0">
+                                            {{ auth()->user()->userDetail->email ?? '' }}
+                                        </h6>
+                                    @else
                                         <h5 class="font-bold">Guest</h5>
                                         <h6 class="text-muted mb-0">@guestmail</h6>
-                                    </div>
+                                    @endif
                                 </div>
+                                
                             </div>
                             <div class="parent">
                                 <div class="guest">

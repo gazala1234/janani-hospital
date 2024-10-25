@@ -8,7 +8,7 @@
     <meta content="" name="keywords">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Janani - Multispeciality Hospital</title>
-    <link rel="shortcut icon" href="{{ asset('../images/janani-logo.png') }}" type="image/x-icon">
+    {{-- add css link file --}}
     @include('links')
 </head>
 

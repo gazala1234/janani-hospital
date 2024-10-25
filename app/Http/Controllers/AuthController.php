@@ -164,14 +164,17 @@ class AuthController extends Controller
         try {
             // Retrieve user by mobile
             $user = User::where('mobile', $request->mobile)->first();
-
+            $userDetails = array();
             if ($user && $user->password === $request->password) {
                 // Authentication passed
+
                 Auth::login($user); // Log the user in
+                // Load user details relationship data
+                $userDetails = $user->load('userDetails');
 
                 $response = [
                     'status' => true,
-                    'data' => $user,
+                    'data' => $userDetails,
                     'message' => 'Login successful',
                 ];
 
