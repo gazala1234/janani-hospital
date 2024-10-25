@@ -78,7 +78,7 @@
         <div class="post-actions">
             <div class="d-flex justify-content-between align-items-center">
                 <span class="icon me-5"><i class="bi bi-hand-thumbs-up"></i> 2</span>
-                <span class="icon comment-icon me-5" id="commentIcon">
+                <span class="icon comment-icon me-5">
                     <i class="bi bi-chat-dots"></i> 0
                 </span>
                 <span class="icon"><i class="bi bi-share"></i></span>
@@ -141,7 +141,7 @@
         <div class="post-actions">
             <div class="d-flex justify-content-between align-items-center">
                 <span class="icon me-5"><i class="bi bi-hand-thumbs-up"></i> 2</span>
-                <span class="icon comment-icon me-5" id="commentIcon">
+                <span class="icon comment-icon me-5">
                     <i class="bi bi-chat-dots"></i> 0
                 </span>
                 <span class="icon"><i class="bi bi-share"></i></span>
@@ -204,7 +204,7 @@
         <div class="post-actions">
             <div class="d-flex justify-content-between align-items-center">
                 <span class="icon me-5"><i class="bi bi-hand-thumbs-up"></i> 2</span>
-                <span class="icon comment-icon me-5" id="commentIcon">
+                <span class="icon comment-icon me-5">
                     <i class="bi bi-chat-dots"></i> 0
                 </span>
                 <span class="icon"><i class="bi bi-share"></i></span>
@@ -267,7 +267,7 @@
         <div class="post-actions">
             <div class="d-flex justify-content-between align-items-center">
                 <span class="icon me-5"><i class="bi bi-hand-thumbs-up"></i> 2</span>
-                <span class="icon comment-icon me-5" id="commentIcon">
+                <span class="icon comment-icon me-5">
                     <i class="bi bi-chat-dots"></i> 0
                 </span>
                 <span class="icon"><i class="bi bi-share"></i></span>

@@ -37,7 +37,7 @@ $(document).ready(function () {
     });
 
     // comment box js
-    $("#commentIcon").click(function () {
+    $(".comment-icon").click(function () {
         // Toggle the comment box below the icons
         $(this).closest(".post-actions").next(".comment-box").toggle();
     });

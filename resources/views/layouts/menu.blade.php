@@ -59,15 +59,9 @@
 </li><!-- End Events -->
 
 <!-- Services -->
-<li class="nav-item">
+{{-- <li class="nav-item">
     <a class="nav-link" href="{{ url('api/services') }}">
         <i class="bi bi-info-circle" style="font-size: 20px;"></i><span>Services</span>
     </a>
-</li><!-- End Services -->
-
-<!-- Settings -->
-<li class="nav-item">
-    <a class="nav-link" href="{{ url('api/settings') }}">
-        <i class="bi bi-gear" style="font-size: 20px;"></i><span>Settings</span>
-    </a>
-</li><!-- End Settings -->
+</li> --}}
+<!-- End Services -->
