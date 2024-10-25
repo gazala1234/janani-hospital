@@ -7,6 +7,7 @@ use App\Http\Controllers\BabyShowerController;
 use App\Http\Controllers\IntroduceYourselfController;
 use App\Http\Controllers\BookConsultController;
 use App\Http\Controllers\EventsController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\SettingsController;
 use Illuminate\Http\Request;
@@ -29,5 +30,7 @@ Route::apiResource('events', EventsController::class);
 Route::apiResource('ask-suggestion', AskSuggestionController::class);
 Route::apiResource('baby-shower', BabyShowerController::class);
 Route::apiResource('introduce-yourself', IntroduceYourselfController::class);
+Route::apiResource('profile', ProfileController::class);
+
 
 ?>

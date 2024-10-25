@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta content="" name="description">
     <meta content="" name="keywords">
     <title>Janani - Multispeciality Hospital</title>
@@ -29,26 +30,67 @@
     <link href="{{ asset('css/mainstyle/style.css') }}" rel="stylesheet">
 </head>
 <style>
+    .recent-message {
+        align-items: center;
+    }
+
+    .avatar.profile img {
+        border-radius: 50%;
+    }
+
+    .name {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
     .hospital-logo {
         max-width: 100%;
         height: auto;
         padding: 0 10px;
         margin: 10px 0;
     }
+
+    @media (max-width: 768px) {
+        .hospital-logo {
+            max-width: 100px;
+        }
+
+        h3 {
+            font-size: 1rem;
+        }
+    }
 </style>
 
 <body>
     <!-- ======= Header ======= -->
-    <header id="header" class="header fixed-top d-flex align-items-center">
-        <!-- start Logo -->
-        <div class="d-flex align-items-center justify-content-between p-3">
-            <a href="#" class="mx-5">
-                <img src="../images/janani-logo.png" class="hospital-logo" alt="Logo" srcset="">
-            </a>
-            <i class="bi bi-list toggle-sidebar-btn"></i>
+    <header id="header" class="header fixed-top d-flex align-items-center justify-content-between p-3">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <!-- Logo Section -->
+                <div class="col-3 col-md-2 d-flex justify-content-center">
+                    <a href="{{ url('/dashboard') }}">
+                        <img src="../images/janani-logo.png" class="hospital-logo" alt="Logo">
+                    </a>
+                </div>
+
+                <!-- Sidebar Toggle Section -->
+                <div class="col-3 col-md-2">
+                    <i class="bi bi-list toggle-sidebar-btn"></i>
+                </div>
+
+                <div class="col-6 text-center">
+                    <h3 class="my-0">JANANI - MULTISPECIALITY HOSPITAL</h3>
+                </div>
+
+                <div class="col-md-2">
+                    <a href="{{ route('register') }}" class="text-decoration-none">
+                        <button type="button" class="btn btn-outline-primary">Signin</button>
+                    </a>
+                </div>
+            </div>
         </div>
-        <!-- End Logo -->
-    </header><!-- End Header -->
+    </header>
 
     <!-- ======= Sidebar ======= -->
     <aside id="sidebar" class="sidebar">
@@ -66,24 +108,26 @@
                 <div class="col-12 col-lg-9">
                     @yield('maincontent')
                 </div>
-                <div class="col-12 col-lg-3 mt-4">
+                <div class="col-12 col-lg-3 mt-5">
                     <div class="card">
-                        <div class="card-body py-4 px-4">
-                            <div class="d-flex align-items-center user-profile">
-                                <div class="avatar profile avatar-xl">
-                                    <img src="../images/profile.jpg" alt="User">
-                                </div>
-                                <div class="ms-3 name">
-                                    <h5 class="font-bold">Guest</h5>
-                                    <h6 class="text-muted mb-0">@guestmail</h6>
+                        <a href="{{ url('api/profile') }}" class="text-decoration-none">
+                            <div class="card-body py-4 px-4">
+                                <div class="d-flex align-items-center user-profile">
+                                    <div class="profile">
+                                        <img src="../images/profile.jpg" alt="User">
+                                    </div>
+                                    <div class="ms-3 name">
+                                        <h5 class="font-bold">Guest</h5>
+                                        <h6 class="text-muted mb-0">@guestmail</h6>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="parent">
-                            <div class="guest">
-                                Guest
+                            <div class="parent">
+                                <div class="guest">
+                                    Guest
+                                </div>
                             </div>
-                        </div>
+                        </a>
                         <hr>
                         <div class="bookmarks px-5 py-4">
                             <div class="d-flex align-items-center user-profile">

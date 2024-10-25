@@ -116,17 +116,17 @@
             <div class="tab-pane fade" id="security" role="tabpanel" aria-labelledby="security-tab">
                 <form action="" method="POST">
                     @csrf
-                    <div class="form-group my-3">
+                    <div class="form-group my-4">
                         <label for="old_password">Old Password</label>
                         <input type="password" class="form-control" id="old_password" name="old_password"
                             placeholder="Enter your old password" required>
                     </div>
-                    <div class="form-group my-3">
+                    <div class="form-group my-4">
                         <label for="new_password">New Password</label>
                         <input type="password" class="form-control" id="new_password" name="new_password"
                             placeholder="Enter your new password" required>
                     </div>
-                    <div class="form-group my-3">
+                    <div class="form-group my-4">
                         <label for="confirm_password">Confirm Password</label>
                         <input type="password" class="form-control" id="confirm_password" name="confirm_password"
                             placeholder="Confirm your new password" required>

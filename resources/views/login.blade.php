@@ -7,8 +7,8 @@
     <meta content="" name="description">
     <meta content="" name="keywords">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>IT CELL</title>
-    {{-- add css link file --}}
+    <title>Janani - Multispeciality Hospital</title>
+    <link rel="shortcut icon" href="{{ asset('../images/janani-logo.png') }}" type="image/x-icon">
     @include('links')
 </head>
 
@@ -37,7 +37,7 @@
                                                 <label for="mobile" class="text-muted"><span
                                                         class="text-danger">*</span> Mobile No</label>
                                                 <input type="text" name="mobile" id="mobile"
-                                                    placeholder="mobile no" class="form-control">
+                                                    placeholder="Mobile no" class="form-control">
                                             </div>
                                             <div id="mobileErrorMsg" class="text-danger font-weight-bold"></div>
                                         </div>
@@ -47,7 +47,7 @@
                                                 <label for="password" class="text-muted"><span
                                                         class="text-danger">*</span> Password</label>
                                                 <input type="password" name="password" class="form-control"
-                                                    id="password" placeholder="enter password">
+                                                    id="password" placeholder="Enter password">
                                             </div>
                                             <div id="passwordErrorMsg" class="text-danger font-weight-bold"></div>
 

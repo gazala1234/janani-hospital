@@ -5,7 +5,8 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>IT CELL</title>
+    <title>Janani - Multispeciality Hospital</title>
+    <link rel="shortcut icon" href="{{ asset('../images/janani-logo.png') }}" type="image/x-icon">
     <meta content="" name="description">
     <meta content="" name="keywords">
     @include('links')
@@ -31,7 +32,7 @@
                                         <div class="col-12">
                                             <div class="form-group">
                                                 <label for="mobile" class="text-muted"><span class="text-danger">*</span>Mobile No</label>
-                                                <input type="text" name="mobile" id="mobile" placeholder="mobile no" class="form-control">
+                                                <input type="text" name="mobile" id="mobile" placeholder="Mobile no" class="form-control">
                                             </div>
                                             <div id="mobileErrorMsg" class="text-danger font-weight-bold"></div>
                                         </div>
@@ -39,7 +40,7 @@
                                         <div class="col-12">
                                             <div class="form-group">
                                                 <label for="password" class="text-muted"><span class="text-danger">*</span>Password</label>
-                                                <input type="password" name="password" class="form-control" id="password" placeholder="enter password">
+                                                <input type="password" name="password" class="form-control" id="password" placeholder="Enter password">
                                             </div>
                                             <div id="passwordErrorMsg" class="text-danger font-weight-bold"></div>
                                         </div>
@@ -47,7 +48,7 @@
                                         <div class="col-12">
                                             <div class="form-group">
                                                 <label for="password_confirmation" class="text-muted"><span class="text-danger">*</span>Confirm Password</label>
-                                                <input type="password" name="password_confirmation" class="form-control" id="password_confirmation" placeholder="enter confirm password">
+                                                <input type="password" name="password_confirmation" class="form-control" id="password_confirmation" placeholder="Enter confirm password">
                                             </div>
                                             <div id="password_confirmationErrorMsg" class="text-danger font-weight-bold"></div>
                                         </div>

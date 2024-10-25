@@ -82,14 +82,14 @@ class AuthController extends Controller
             $response = [
                 'status' => true,
                 'data' => $user,
-                'message' => 'User created successfully',
+                'message' => 'Account created successfully',
             ];
             return response()->json($response, 201); // Created
         } catch (\Exception $e) {
             $response = [
                 'status' => false,
                 'data' => array(),
-                'message' => 'Error creating user: ' . $e->getMessage(),
+                'message' => 'Error creating account: ' . $e->getMessage(),
             ];
             return response()->json($response, 500);
         }
