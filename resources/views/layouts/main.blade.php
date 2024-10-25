@@ -116,17 +116,21 @@
                                     <img src="../images/profile.jpg" alt="User">
                                 </div>
                                 <div class="ms-3 name">
-                                    @if (auth()->check())
+                                    {{-- @if (auth()->check()) --}}
+                                    <pre>{{ print_r(session('user'), true) }}</pre>
+
                                         <h5 class="font-bold">
-                                            {{ auth()->user()->userDetail->name ?? 'Patient' }}
+                                            {{ isset(session('user')->userDetails->name) ? session('user')->userDetails->name : 'Guest' }}
+
                                         </h5>
                                         <h6 class="text-muted mb-0">
-                                            {{ auth()->user()->userDetail->email ?? '' }}
+                                            {{ isset(session('user')->email) ? session('user')->email : '@guestmail' }}
+
                                         </h6>
-                                    @else
-                                        <h5 class="font-bold">Guest</h5>
-                                        <h6 class="text-muted mb-0">@guestmail</h6>
-                                    @endif
+                                    {{-- @else --}}
+                                        {{-- <h5 class="font-bold">Guest</h5>
+                                        <h6 class="text-muted mb-0">@guestmail</h6> --}}
+                                    {{-- @endif --}}
                                 </div>
                                 
                             </div>

@@ -18,7 +18,7 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 // Login & Register routes start
-Route::post('user-auth-login', [AuthController::class,'auth_login']);
+Route::post('user-auth-login', [AuthController::class,'login']);
 Route::apiResource('user-auth', AuthController::class);
 // Login & Register routes end
 
