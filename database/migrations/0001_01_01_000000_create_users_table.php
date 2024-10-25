@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('mobile')->unsigned(); // Using bigInteger for mobile
+            $table->unsignedBigInteger('mobile')->unique(); // Using bigInteger for mobile
             $table->string('password');
             $table->string('role');
             $table->softDeletes();

@@ -25,5 +25,13 @@ class User extends Authenticatable
         'password',
         'role',
     ];
+
+    /**
+     * Get the user detail associated with the user.
+     */
+    public function userDetails()
+    {
+        return $this->hasOne(UserDetails::class, 'mobile', 'mobile');
+    }
     
 }

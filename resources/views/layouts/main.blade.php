@@ -74,9 +74,19 @@
                                     <img src="../images/profile.jpg" alt="User">
                                 </div>
                                 <div class="ms-3 name">
-                                    <h5 class="font-bold">Guest</h5>
-                                    <h6 class="text-muted mb-0">@guestmail</h6>
+                                    @if (auth()->check())
+                                        <h5 class="font-bold">
+                                            {{ auth()->user()->userDetail->name ?? 'Patient' }}
+                                        </h5>
+                                        <h6 class="text-muted mb-0">
+                                            {{ auth()->user()->userDetail->email ?? '' }}
+                                        </h6>
+                                    @else
+                                        <h5 class="font-bold">Guest</h5>
+                                        <h6 class="text-muted mb-0">@guestmail</h6>
+                                    @endif
                                 </div>
+                                
                             </div>
                         </div>
                         <div class="parent">

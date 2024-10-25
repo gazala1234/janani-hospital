@@ -7,7 +7,7 @@
     <meta content="" name="description">
     <meta content="" name="keywords">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>IT CELL</title>
+    <title>Janani - Multispeciality Hospital</title>
     {{-- add css link file --}}
     @include('links')
 </head>
