@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta content="" name="description">
     <meta content="" name="keywords">
     <title>Janani - Multispeciality Hospital</title>
@@ -159,26 +160,25 @@
                 <div class="col-12 col-lg-3 mt-5">
                     <div class="card">
                         <div class="card-body py-4 px-4">
-                            <div class="d-flex align-items-center user-profile">
-                                <div class="avatar profile avatar-xl">
-                                    <img src="../images/profile.jpg" alt="User">
+                            <a href="{{ url('api/profile') }}">
+                                <div class="d-flex align-items-center user-profile">
+                                    <div class="avatar profile avatar-xl">
+                                        <img src="../images/profile.jpg" alt="User">
+                                    </div>
+                                    <div class="ms-3 name">
+                                        <h5 class="font-bold">
+                                            {{ session('role') == 'patient' ? session('userDetails')['fname'] ?? 'Patient' : 'Guest' }}
+                                        </h5>
+                                        <h6 class="text-muted mb-0">
+                                            {{ session('userDetails')['email'] ?? '@guestmail' }}
+                                        </h6>
+                                    </div>
                                 </div>
-                                <div class="ms-3 name">
-                                    <h5 class="font-bold">
-                                        {{ session('role') == 'patient' 
-                                            ? (session('userDetails')['fname'] ?? 'Patient')
-                                            : 'Guest' }}
-                                    </h5>
-                                    <h6 class="text-muted mb-0">
-                                        {{ session('userDetails')['email'] ?? '@guestmail' }}
-                                    </h6>
+                                <div class="parent">
+                                    <div class="guest">
+                                        Guest
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="parent">
-                                <div class="guest">
-                                    Guest
-                                </div>
-                            </div>
                             </a>
                             <hr>
                             <div class="bookmarks px-5 py-4">
@@ -193,53 +193,82 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card">
-                            <div class="card-header">
-                                <h4>Recent Messages</h4>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Recent Messages</h4>
+                        </div>
+                        <div class="card-content pb-4">
+                            <div class="recent-message d-flex user-profile px-4 py-3">
+                                <div class="avatar profile avatar-lg">
+                                    <img src="../images/profile.jpg">
+                                </div>
+                                <div class="name ms-4">
+                                    <h5 class="mb-1">Hank Schrader</h5>
+                                    <h6 class="text-muted mb-0">@johnducky</h6>
+                                </div>
                             </div>
-                            <div class="card-content pb-4">
-                                <div class="recent-message d-flex user-profile px-4 py-3">
-                                    <div class="avatar profile avatar-lg">
-                                        <img src="../images/profile.jpg">
-                                    </div>
-                                    <div class="name ms-4">
-                                        <h5 class="mb-1">Hank Schrader</h5>
-                                        <h6 class="text-muted mb-0">@johnducky</h6>
-                                    </div>
+                            <div class="recent-message d-flex user-profile px-4 py-3">
+                                <div class="avatar profile avatar-lg">
+                                    <img src="../images/profile.jpg">
                                 </div>
-                                <div class="recent-message d-flex user-profile px-4 py-3">
-                                    <div class="avatar profile avatar-lg">
-                                        <img src="../images/profile.jpg">
-                                    </div>
-                                    <div class="name ms-4">
-                                        <h5 class="mb-1">Dean Winchester</h5>
-                                        <h6 class="text-muted mb-0">@imdean</h6>
-                                    </div>
+                                <div class="name ms-4">
+                                    <h5 class="mb-1">Dean Winchester</h5>
+                                    <h6 class="text-muted mb-0">@imdean</h6>
                                 </div>
-                                <div class="recent-message d-flex user-profile px-4 py-3">
-                                    <div class="avatar profile avatar-lg">
-                                        <img src="../images/profile.jpg">
-                                    </div>
-                                    <div class="name ms-4">
-                                        <h5 class="mb-1">John Dodol</h5>
-                                        <h6 class="text-muted mb-0">@dodoljohn</h6>
-                                    </div>
+                            </div>
+                            <div class="recent-message d-flex user-profile px-4 py-3">
+                                <div class="avatar profile avatar-lg">
+                                    <img src="../images/profile.jpg">
                                 </div>
-                                <div class="px-4">
-                                    <button class='btn btn-block btn-xl btn-primary font-bold mt-3'>Start
-                                        Conversation</button>
+                                <div class="name ms-4">
+                                    <h5 class="mb-1">John Dodol</h5>
+                                    <h6 class="text-muted mb-0">@dodoljohn</h6>
                                 </div>
+                            </div>
+                            <div class="px-4">
+                                <button class='btn btn-block btn-xl btn-primary font-bold mt-3'>Start
+                                    Conversation</button>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
         </section>
     </main>
     <!-- End #main -->
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <script>
+        async function sendAxiosRequest(method, apiEndpoint, data) {
+            let config = {
+                method: method,
+                maxBodyLength: Infinity,
+                url: `${apiEndpoint}`, // Use relative URL
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer {{ session('token') }}` // Authorization token
+                },
+                data: data
+            };
+
+            try {
+                const response = await axios.request(config);
+                return response;
+            } catch (error) {
+                if (error.response && error.response.status === 401) {
+                    alert('Please login to continue.');
+                    window.location.href = '/login'; // Redirect to login page
+                } else {
+                    throw error;
+                }
+            }
+        }
+
         $(document).ready(function() {
             $('#signoutButton').on('click', function() {
                 $.ajax({

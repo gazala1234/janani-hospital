@@ -10,6 +10,7 @@ use App\Http\Controllers\EventsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\UserDetailsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -36,5 +37,7 @@ Route::post('/login/send-otp', [AuthController::class, 'sendOtp']);
 Route::post('/login/verify-otp', [AuthController::class, 'verifyOtp']);
 
 Route::post('/logout', [AuthController::class, 'logout']);
+
+Route::apiResource('/details-user', UserDetailsController::class);
 
 ?>

@@ -4298,6 +4298,10 @@ fieldset:disabled .btn {
     border: var(--bs-card-border-width) solid var(--bs-card-border-color);
     border-radius: var(--bs-card-border-radius);
 }
+
+.card-content{
+    padding: 10 20px;
+}
 .card > hr {
     margin-right: 0;
     margin-left: 0;
@@ -8003,7 +8007,7 @@ fieldset:disabled .btn {
     margin-left: 1rem !important;
 }
 .ms-4 {
-    margin-left: 1.5rem !important;
+    margin-left: 0.5rem !important;
 }
 .ms-5 {
     margin-left: 3rem !important;
@@ -8046,8 +8050,8 @@ fieldset:disabled .btn {
     padding-left: 1rem !important;
 }
 .px-4 {
-    padding-right: 1.5rem !important;
-    padding-left: 1.5rem !important;
+    /* padding-right: 1.5rem !important; */
+    padding-left: 0.5rem !important;
 }
 .px-5 {
     padding-right: 3rem !important;

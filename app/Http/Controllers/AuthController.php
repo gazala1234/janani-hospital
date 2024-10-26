@@ -198,14 +198,14 @@ class AuthController extends Controller
 
             $response = [
                 'status' => true,
-                'data' => ['otp' => $otp], 
+                'data' => ['otp' => $otp],
                 'message' => 'OTP sent successfully.',
             ];
 
             return response()->json($response, 200);
         } catch (\Exception $e) {
             $response['message'] = 'Error sending OTP: ' . $e->getMessage();
-            return response()->json($response, 500); 
+            return response()->json($response, 500);
         }
     }
 
@@ -228,23 +228,39 @@ class AuthController extends Controller
             $cachedOtp = Cache::get('otp_' . $request->mobile);
 
             if ($cachedOtp && $cachedOtp == $request->otp) {
-                Cache::forget('otp_' . $request->mobile); 
+                Cache::forget('otp_' . $request->mobile); // Clear OTP cache after successful login
 
+                // Define token and expiration
                 $token = Str::random(60);
+                $otpExpiresAt = now()->addMinutes(2); // Adjust the expiration time as needed
+
+                // Store user information in the database
+                $user = User::updateOrCreate(
+                    ['mobile' => $request->mobile], // Update if exists, else create
+                    [
+                        'otp' => $request->otp,
+                        'otp_expires_at' => $otpExpiresAt,
+                        'role' => 'patient'
+                    ]
+                );
+
                 $response = [
                     'status' => true,
-                    'data' => ['token' => $token],
-                    'message' => 'OTP verified successfully. You are logged in.',
+                    'data' => [
+                        'token' => $token,
+                        'user' => $user
+                    ],
+                    'message' => 'OTP verified. You are logged in.',
                 ];
 
-                return response()->json($response, 200); 
+                return response()->json($response, 200);
             } else {
                 $response['message'] = 'Invalid or expired OTP.';
-                return response()->json($response, 401); 
+                return response()->json($response, 401);
             }
         } catch (\Exception $e) {
             $response['message'] = 'Error verifying OTP: ' . $e->getMessage();
-            return response()->json($response, 500); 
+            return response()->json($response, 500);
         }
     }
 }

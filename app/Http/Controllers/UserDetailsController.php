@@ -70,12 +70,11 @@ class UserDetailsController extends Controller
 
         try {
             $userDetail = UserDetails::create($request->all());
-
             $response['status'] = true;
             $response['data'] = $userDetail;
-            $response['message'] = 'User detail created successfully.';
+            $response['message'] = 'User detail added successfully.';
         } catch (\Exception $e) {
-            $response['message'] = 'Error creating user detail: ' . $e->getMessage();
+            $response['message'] = 'Error adding user detail: ' . $e->getMessage();
         }
 
         return response()->json($response);

@@ -17,12 +17,12 @@ return new class extends Migration
             $table->string('lname'); 
             $table->string('city'); 
             $table->unsignedBigInteger('user_id');
-            $table->string('email')->unique()->index();
-            $table->string('country'); 
+            $table->string('email')->unique()->nullable();
+            $table->string('country')->nullable(); 
             $table->date('dob'); 
             $table->unsignedBigInteger('mobile')->unique()->index(); 
             $table->string('blood_group'); 
-            $table->text('address'); 
+            $table->text('address')->nullable(); 
             $table->string('img_path')->nullable(); 
             $table->softDeletes(); 
             $table->timestamps();

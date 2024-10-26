@@ -14,7 +14,8 @@
 <body style="background-color: gainsboro;">
     <main>
         <div class="container">
-            <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+            <section
+                class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
@@ -28,26 +29,32 @@
                                         @csrf
                                         <div class="col-12">
                                             <div class="form-group">
-                                                <label for="mobile" class="text-muted"><span class="text-danger">*</span> Mobile No</label>
-                                                <input type="text" name="mobile" id="mobile" placeholder="Enter mobile number" class="form-control">
+                                                <label for="mobile" class="text-muted"><span
+                                                        class="text-danger">*</span> Mobile No</label>
+                                                <input type="text" name="mobile" id="mobile"
+                                                    placeholder="Enter mobile number" class="form-control">
                                             </div>
                                             <div id="mobileErrorMsg" class="text-danger font-weight-bold"></div>
                                         </div>
 
                                         <div class="col-12">
-                                            <button type="button" id="sendOtpButton" class="btn btn-primary w-100 mt-3">Send OTP</button>
+                                            <button type="button" id="sendOtpButton"
+                                                class="btn btn-primary w-100 mt-3">Send OTP</button>
                                         </div>
 
                                         <div class="col-12" id="otpSection" style="display: none;">
                                             <div class="form-group">
-                                                <label for="otp" class="text-muted"><span class="text-danger">*</span> OTP</label>
-                                                <input type="text" name="otp" id="otp" placeholder="Enter OTP" class="form-control">
+                                                <label for="otp" class="text-muted"><span
+                                                        class="text-danger">*</span> OTP</label>
+                                                <input type="text" name="otp" id="otp"
+                                                    placeholder="Enter OTP" class="form-control">
                                             </div>
                                             <div id="otpErrorMsg" class="text-danger font-weight-bold"></div>
                                         </div>
 
                                         <div class="col-12" id="verifyOtpSection" style="display: none;">
-                                            <button class="btn btn-primary w-100" type="submit" id="verifyOtpButton">Login</button>
+                                            <button class="btn btn-primary w-100" type="submit"
+                                                id="verifyOtpButton">Login</button>
                                         </div>
                                     </form>
 
@@ -92,7 +99,9 @@
                 // Hide the Send OTP button and show OTP input and Verify button sections
                 $('#sendOtpButton').hide();
 
-                sendAxiosRequest('post', '/api/login/send-otp', { mobile: mobile })
+                sendAxiosRequest('post', '/api/login/send-otp', {
+                        mobile: mobile
+                    })
                     .then(response => {
                         alert(response.data.message);
                         $('#otpSection, #verifyOtpSection').show(); // Show OTP input and verify button
@@ -100,7 +109,8 @@
                     .catch(error => {
                         console.log(error);
                         let errorMsgs = error.response.data.errors;
-                        $('#mobileErrorMsg').html(errorMsgs ? errorMsgs.mobile.join(",") : 'Failed to send OTP');
+                        $('#mobileErrorMsg').html(errorMsgs ? errorMsgs.mobile.join(",") :
+                            'Failed to send OTP');
                         $('#sendOtpButton').show(); // Show Send OTP button again if there's an error
                     });
             });
@@ -117,7 +127,8 @@
                 sendAxiosRequest('post', '/api/login/verify-otp', formData)
                     .then(response => {
                         if (response.data.status) {
-                           window.location.href = "{{ url('/dashboard') }}"; // Adjust URL as needed
+                            alert(response.data.message);
+                            window.location.href = "{{ url('/dashboard') }}"; // Adjust URL as needed
                         } else {
                             alert(response.data.message);
                         }
@@ -125,7 +136,8 @@
                     .catch(error => {
                         console.log(error);
                         let errorMsgs = error.response.data.errors;
-                        $('#otpErrorMsg').html(errorMsgs ? errorMsgs.otp.join(",") : 'Failed to verify OTP');
+                        $('#otpErrorMsg').html(errorMsgs ? errorMsgs.otp.join(",") :
+                            'Failed to verify OTP');
                     });
             });
 
