@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('email')->unique()->index();
             $table->string('country'); 
             $table->date('dob'); 
-            $table->unsignedBigInteger('mobile')->unique()->index(); 
+            $table->unsignedInteger('mobile')->unique()->index(); 
             $table->string('blood_group'); 
             $table->text('address'); 
             $table->string('img_path')->nullable(); 
