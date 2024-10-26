@@ -32,5 +32,9 @@ Route::apiResource('baby-shower', BabyShowerController::class);
 Route::apiResource('introduce-yourself', IntroduceYourselfController::class);
 Route::apiResource('profile', ProfileController::class);
 
+Route::post('/login/send-otp', [AuthController::class, 'sendOtp']);
+Route::post('/login/verify-otp', [AuthController::class, 'verifyOtp']);
+
+Route::post('/logout', [AuthController::class, 'logout']);
 
 ?>

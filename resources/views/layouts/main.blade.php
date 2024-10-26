@@ -34,19 +34,15 @@
     @media (max-width: 320px) {
         .small-btn {
             font-size: 0.8rem;
-            /* Reduce font size */
             padding: 0.3rem 0.6rem;
-            /* Adjust padding */
         }
 
         .small-icon {
             font-size: 1.2rem;
-            /* Reduce size of the icon */
         }
 
         .header {
             padding: 1rem;
-            /* Adjust header padding if necessary */
         }
     }
 
@@ -133,7 +129,7 @@
                                 <hr class="dropdown-divider">
                             </li>
                             <li>
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" id="signoutButton" href="javascript:void(0);">
                                     <i class="bi bi-box-arrow-right me-2"></i> Signout
                                 </a>
                             </li>
@@ -162,14 +158,15 @@
                 </div>
                 <div class="col-12 col-lg-3 mt-5">
                     <div class="card">
-                        <div class="card-body py-4 px-4">
-                            <div class="d-flex align-items-center user-profile">
-                                <div class="avatar profile avatar-xl">
-                                    <img src="../images/profile.jpg" alt="User">
-                                </div>
-                                <div class="ms-3 name">
-                                    {{-- @if (auth()->check()) --}}
-                                    <pre>{{ print_r(session('user'), true) }}</pre>
+                        <a class="dropdown-item" href="{{ url('api/profile') }}">
+                            <div class="card-body py-4 px-4">
+                                <div class="d-flex align-items-center user-profile">
+                                    <div class="avatar profile avatar-xl">
+                                        <img src="../images/profile.jpg" alt="User">
+                                    </div>
+                                    <div class="ms-3 name">
+                                        {{-- @if (auth()->check()) --}}
+                                        <pre>{{ print_r(session('user'), true) }}</pre>
 
                                         <h5 class="font-bold">
                                             {{ isset(session('user')->userDetails->name) ? session('user')->userDetails->name : 'Guest' }}
@@ -179,16 +176,17 @@
                                             {{ isset(session('user')->email) ? session('user')->email : '@guestmail' }}
 
                                         </h6>
-                                    {{-- @else --}}
+                                        {{-- @else --}}
                                         {{-- <h5 class="font-bold">Guest</h5>
                                         <h6 class="text-muted mb-0">@guestmail</h6> --}}
-                                    {{-- @endif --}}
+                                        {{-- @endif --}}
+                                    </div>
+
                                 </div>
-                                
-                            </div>
-                            <div class="parent">
-                                <div class="guest">
-                                    Guest
+                                <div class="parent">
+                                    <div class="guest">
+                                        Guest
+                                    </div>
                                 </div>
                             </div>
                         </a>
@@ -249,24 +247,33 @@
     </main>
     <!-- End #main -->
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#signoutButton').on('click', function() {
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/logout',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        if (response.status) {
+                            alert(response.message);
+                            window.location.href =
+                                "{{ url('/') }}";
+                        } else {
+                            alert('Logout failed. Please try again.');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                        alert('Logout failed. Please try again.');
+                    }
+                });
+            });
+        });
+    </script>
+
     @include('layouts.footer')
-
-
-    {{-- <div class="col-6 col-md-4 col-lg-3">
-        <div class="row align-items-center">
-            <!-- Sidebar Toggle Section -->
-            <div class="col-2 text-center">
-                <i class="bi bi-list toggle-sidebar-btn"></i>
-            </div>
-    
-            <!-- Search Bar Section -->
-            <div class="col-10 mt-3">
-                <form class="search-form d-flex align-items-center" method="POST" action="#">
-                    <input type="text" name="query" class="form-control me-2" placeholder="Search" title="Enter search keyword">
-                    <button type="submit" class="btn btn-outline-secondary" title="Search">
-                        <i class="bi bi-search"></i>
-                    </button>
-                </form>
-            </div>
-        </div>
-    </div> --}}

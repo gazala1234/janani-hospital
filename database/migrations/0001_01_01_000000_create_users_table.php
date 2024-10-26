@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('mobile')->unique(); // Using bigInteger for mobile
-            $table->string('password');
+            $table->unsignedBigInteger('mobile')->unique();
+            $table->string('otp', 6)->nullable();
+            $table->timestamp('otp_expires_at')->nullable();
             $table->string('role');
             $table->softDeletes();
             $table->timestamps();
