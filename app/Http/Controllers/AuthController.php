@@ -97,41 +97,6 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = array(
-            'password' => $request->password,
-            'mobile' => $request->mobile,
-        );
-        // // Check if the input is an email or mobile number
-        // if (filter_var($request->mobile, FILTER_VALIDATE_EMAIL)) {
-        //     // It's an email
-        //     $credentials['email'] = $request->mobile;
-        // } else {
-        //     // Assume it's a mobile number
-        //     $credentials['mobile'] = $request->mobile;
-        // }
-        $msg = "";
-        $token = auth()->attempt($credentials);
-        $userDetails = array();
-        if (!$token) {
-            $msg = "Wrong Credentials";
-        } else {
-            $userDetails = auth()->user()->load(['userDetails']);
-            $msg = "Login successfull";
-            // Store user data in session
-            session(['user' => $userDetails]);
-        }
-        $response = array(
-            'status' => $token != '' ? true : false,
-            'message' => $msg,
-            'userDetails' => $userDetails,
-            'token' => $token,
-        );
-        return response()->json($response, 200); // Created
-    }
-
-    public function auth_login(Request $request)
-    {
-        // Initialize response array
         $response = [
             'status' => false,
             'data' => [],
@@ -140,42 +105,58 @@ class AuthController extends Controller
 
         // Validate the request data
         $request->validate([
-            'mobile' => 'required|digits_between:10,15',
+            'mobile' => 'required',
             'password' => 'required|min:6',
         ]);
 
         try {
-            // Retrieve user by mobile
-            $user = User::where('mobile', $request->mobile)->first();
-            $userDetails = array();
-            if ($user && $user->password === $request->password) {
-                // Authentication passed
+            // Attempt to find the user by email
+            $user = User::with('userDetails') // Assuming a 'userDetails' relationship is defined in User model
+                ->where('mobile', $request->mobile)
+                ->first();
 
-                Auth::login($user); // Log the user in
-                // Load user details relationship data
-                $userDetails = $user->load('userDetails');
+            if ($user) {
+                // User found, now check the password
+                if (Hash::check($request->password, $user->password)) {
 
-                $response = [
-                    'status' => true,
-                    'data' => $userDetails,
-                    'message' => 'Login successful',
-                ];
+                    // Start session and add user details
+                    session([
+                        'id' => $user->id,
+                        'mobile' => $user->mobile,
+                        'role' => $user->role,
+                        'userDetails' => $user->userDetails ? $user->userDetails->toArray() : [],
+                    ]);
 
-                return response()->json($response, 200); // OK
+                    //dd(session()->all());
+
+
+                    $response = [
+                        'status' => true,
+                        'data' => $user,
+                        'message' => 'User Logged successfully',
+                    ];
+                    return response()->json($response, 201); // success
+                } else {
+                    $response = [
+                        'status' => false,
+                        'data' => array(),
+                        'message' => 'Password incorrect.',
+                    ];
+                    return response()->json($response, 201); // error
+                }
             } else {
-                // Authentication failed
                 $response = [
                     'status' => false,
-                    'data' => [],
-                    'message' => 'Invalid mobile number or password.',
+                    'data' => array(),
+                    'message' => 'wrong credentials.',
                 ];
-                return response()->json($response, 401); // Unauthorized
+                return response()->json($response, 201); // error
             }
         } catch (\Exception $e) {
             $response = [
                 'status' => false,
-                'data' => [],
-                'message' => 'Error creating user: ' . $e->getMessage(),
+                'data' => array(),
+                'message' => 'Error logging user: ' . $e->getMessage(),
             ];
             return response()->json($response, 500);
         }

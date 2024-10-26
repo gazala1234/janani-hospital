@@ -121,7 +121,7 @@
                 sendAxiosRequest('post', '/api/user-auth-login', formData)
                     .then(response => {
                         if (response.data.status) {
-                            window.location.href = "{{ url('/dashboard') }}"; // Adjust URL as needed
+                           window.location.href = "{{ url('/dashboard') }}"; // Adjust URL as needed
                         } else {
                             alert(response.data.message);
                             response.data.status ? location.reload() : '';

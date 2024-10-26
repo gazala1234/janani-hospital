@@ -28,8 +28,8 @@ class UserDetails extends Model
     /**
      * Get the user associated with the user detail.
      */
-    public function users()
+    public function user()
     {
-        return $this->belongsTo(User::class, 'mobile', 'mobile');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }

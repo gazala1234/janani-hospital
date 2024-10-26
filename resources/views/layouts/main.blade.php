@@ -168,83 +168,75 @@
                                     <img src="../images/profile.jpg" alt="User">
                                 </div>
                                 <div class="ms-3 name">
-                                    {{-- @if (auth()->check()) --}}
-                                    <pre>{{ print_r(session('user'), true) }}</pre>
-
-                                        <h5 class="font-bold">
-                                            {{ isset(session('user')->userDetails->name) ? session('user')->userDetails->name : 'Guest' }}
-
-                                        </h5>
-                                        <h6 class="text-muted mb-0">
-                                            {{ isset(session('user')->email) ? session('user')->email : '@guestmail' }}
-
-                                        </h6>
-                                    {{-- @else --}}
-                                        {{-- <h5 class="font-bold">Guest</h5>
-                                        <h6 class="text-muted mb-0">@guestmail</h6> --}}
-                                    {{-- @endif --}}
+                                    <h5 class="font-bold">
+                                        {{ session('role') == 'patient' 
+                                            ? (session('userDetails')['fname'] ?? 'Patient')
+                                            : 'Guest' }}
+                                    </h5>
+                                    <h6 class="text-muted mb-0">
+                                        {{ session('userDetails')['email'] ?? '@guestmail' }}
+                                    </h6>
                                 </div>
-                                
                             </div>
                             <div class="parent">
                                 <div class="guest">
                                     Guest
                                 </div>
                             </div>
-                        </a>
-                        <hr>
-                        <div class="bookmarks px-5 py-4">
-                            <div class="d-flex align-items-center user-profile">
-                                <div class="profile">
-                                    <i class="fas fa-bookmark" style="font-size: 1.5rem;"></i>
-                                </div>
-                                <div class="ms-3 name">
-                                    <h5 class="font-bold">My Bookmarks</h5>
-                                    <h6 class="text-muted mb-0">0 items</h6>
+                            </a>
+                            <hr>
+                            <div class="bookmarks px-5 py-4">
+                                <div class="d-flex align-items-center user-profile">
+                                    <div class="profile">
+                                        <i class="fas fa-bookmark" style="font-size: 1.5rem;"></i>
+                                    </div>
+                                    <div class="ms-3 name">
+                                        <h5 class="font-bold">My Bookmarks</h5>
+                                        <h6 class="text-muted mb-0">0 items</h6>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Recent Messages</h4>
-                        </div>
-                        <div class="card-content pb-4">
-                            <div class="recent-message d-flex user-profile px-4 py-3">
-                                <div class="avatar profile avatar-lg">
-                                    <img src="../images/profile.jpg">
-                                </div>
-                                <div class="name ms-4">
-                                    <h5 class="mb-1">Hank Schrader</h5>
-                                    <h6 class="text-muted mb-0">@johnducky</h6>
-                                </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>Recent Messages</h4>
                             </div>
-                            <div class="recent-message d-flex user-profile px-4 py-3">
-                                <div class="avatar profile avatar-lg">
-                                    <img src="../images/profile.jpg">
+                            <div class="card-content pb-4">
+                                <div class="recent-message d-flex user-profile px-4 py-3">
+                                    <div class="avatar profile avatar-lg">
+                                        <img src="../images/profile.jpg">
+                                    </div>
+                                    <div class="name ms-4">
+                                        <h5 class="mb-1">Hank Schrader</h5>
+                                        <h6 class="text-muted mb-0">@johnducky</h6>
+                                    </div>
                                 </div>
-                                <div class="name ms-4">
-                                    <h5 class="mb-1">Dean Winchester</h5>
-                                    <h6 class="text-muted mb-0">@imdean</h6>
+                                <div class="recent-message d-flex user-profile px-4 py-3">
+                                    <div class="avatar profile avatar-lg">
+                                        <img src="../images/profile.jpg">
+                                    </div>
+                                    <div class="name ms-4">
+                                        <h5 class="mb-1">Dean Winchester</h5>
+                                        <h6 class="text-muted mb-0">@imdean</h6>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="recent-message d-flex user-profile px-4 py-3">
-                                <div class="avatar profile avatar-lg">
-                                    <img src="../images/profile.jpg">
+                                <div class="recent-message d-flex user-profile px-4 py-3">
+                                    <div class="avatar profile avatar-lg">
+                                        <img src="../images/profile.jpg">
+                                    </div>
+                                    <div class="name ms-4">
+                                        <h5 class="mb-1">John Dodol</h5>
+                                        <h6 class="text-muted mb-0">@dodoljohn</h6>
+                                    </div>
                                 </div>
-                                <div class="name ms-4">
-                                    <h5 class="mb-1">John Dodol</h5>
-                                    <h6 class="text-muted mb-0">@dodoljohn</h6>
+                                <div class="px-4">
+                                    <button class='btn btn-block btn-xl btn-primary font-bold mt-3'>Start
+                                        Conversation</button>
                                 </div>
-                            </div>
-                            <div class="px-4">
-                                <button class='btn btn-block btn-xl btn-primary font-bold mt-3'>Start
-                                    Conversation</button>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
         </section>
     </main>
     <!-- End #main -->
