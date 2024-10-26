@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('fname'); 
             $table->string('lname'); 
             $table->string('city'); 
+            $table->unsignedBigInteger('user_id');
             $table->string('email')->unique()->index();
             $table->string('country'); 
             $table->date('dob'); 
@@ -26,8 +27,8 @@ return new class extends Migration
             $table->softDeletes(); 
             $table->timestamps();
 
-            $table->foreign('mobile', 'fk_user_mobile')
-             ->references('mobile')
+            $table->foreign('user_id', 'fk_users_user_id')
+             ->references('id')
              ->on('users')
              ->onDelete('cascade');
         });
