@@ -14,7 +14,7 @@ class PostsController extends Controller
     public function index(Request $request)
     {
         try {
-            $query = Posts::query();
+            $query = Posts::with(['user.userDetails']);
 
             // Apply other query string parameters dynamically
             foreach ($request->query() as $key => $value) {
