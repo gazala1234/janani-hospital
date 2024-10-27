@@ -3,6 +3,130 @@
 <link href="{{ asset('css/customfiles/chatting.css') }}" rel="stylesheet">
 
 @section('maincontent')
+    <script>
+        sendAxiosRequest('get', `/api/posts?type=community_feed`, {})
+            .then(response => {
+                if (response.data.status) {
+                    const feedContainer = document.querySelector('.community-feed');
+                    const posts = response.data.data; // Array of posts
+
+                    if (posts.length > 0) {
+                        // Loop through each post and add to feed
+                        posts.forEach(post => {
+                            const user = post.user;
+                            const userDetails = user.user_details || {};
+                            const profileImage = userDetails.img_path || '../images/profile.jpg';
+                            const userName = `${userDetails.fname || ''} ${userDetails.lname || ''}`.trim() ||
+                                'Anonymous';
+                            const likesCount = post.likes_count || 0;
+                            const commentsCount = post.comments_count || 0;
+
+                            const postCard = `
+                            <div class="card">
+                                <div class="card-content">
+                                    <div class="user-info">
+                                        <div class="profile">
+                                            <img src="${profileImage}" alt="User Image" />
+                                            <span class="name">${userName}</span>
+                                        </div>
+                                        <span class="time">${post.created_at}</span>
+                                    </div>
+
+                                    <p class="user-question">
+                                        ${post.content}
+                                    </p>
+
+                                    <div class="post-actions mt-3">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <span class="icon me-5"><i class="bi bi-hand-thumbs-up"></i> ${likesCount}</span>
+                                            <span class="icon comment-icon me-5">
+                                                <i class="bi bi-chat-dots"></i> ${commentsCount}
+                                            </span>
+                                            <span class="icon"><i class="bi bi-share"></i></span>
+                                        </div>
+
+                                        <div class="dropdown">
+                                            <button class="btn btn-link" type="button" data-toggle="dropdown" aria-expanded="false">
+                                                <i class="fas fa-ellipsis-h"></i>
+                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item" href="#">Bookmark Comment</a>
+                                                <a class="dropdown-item" href="#">Report Comment</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="comment-box mt-3 position-relative" style="display: none; width: 100%;">
+                                        <textarea class="form-control" rows="6" placeholder="Add a comment..."
+                                            style="width: 100%; padding-right: 60px;"></textarea>
+
+                                        <!-- Icons and button positioned inside the comment box -->
+                                        <div class="comment-tools d-flex align-items-center"
+                                            style="position: absolute; bottom: 10px; left: 10px; right: 10px; display: flex; justify-content: space-between;">
+                                            <!-- Left side: Plus and Gallery icons -->
+                                            <div class="d-flex">
+                                                <span class="icon-sticker me-4" style="cursor: pointer;">
+                                                    <i class="fas fa-plus"></i>
+                                                </span>
+                                                <span class="icon-gallery" style="cursor: pointer;">
+                                                    <i class="fas fa-image"></i>
+                                                </span>
+                                            </div>
+                                            <!-- Right side: Comment button -->
+                                            <button class="btn btn-primary">Comment</button>
+                                        </div>
+                                        <div class="reply-comment">
+                                            <h2>Comments</h2>
+                                            <div class="user-info">
+                                                <div class="profile">
+                                                    <img src="../images/profile.jpg" alt="User Image" />
+                                                    <span class="name">Anonymous _</span>
+                                                </div>
+                                                <span class="time">44 minutes ago</span>
+                                            </div>
+
+                                            <p class="user-question">
+                                                Hello Doctor, I am 17 weeks pregnant. I got my quadruple marker done as suggested by doctor.
+                                                The AFP MOM value is 3.1 and NTD screening shows positive. Should I be concerned? Please suggest
+                                                further course. Thanks
+                                            </p>
+
+                                            <div class="post-actions mt-3">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <span class="icon me-5"><i class="bi bi-hand-thumbs-up"></i> 2</span>
+                                                    <span class="icon comment-icon"><i class="bi bi-reply"></i> 1</span>
+                                                </div>
+
+                                                <!-- Dropdown for post options -->
+                                                <div class="dropdown">
+                                                    <button class="btn btn-link" type="button" id="dropdownMenuButton"
+                                                        data-toggle="dropdown" aria-expanded="false">
+                                                        <i class="fas fa-ellipsis-h"></i>
+                                                    </button>
+                                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                                                        <a class="dropdown-item" href="#">Bookmark Comment</a>
+                                                        <a class="dropdown-item" href="#">Report Comment</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>`;
+                            feedContainer.insertAdjacentHTML('beforeend', postCard);
+                        });
+                    } else {
+                        feedContainer.innerHTML = "<p>No community feed available.</p>";
+                    }
+                } else {
+                    document.querySelector('.community-feed').innerHTML = "<p>No community feed available.</p>";
+                }
+            })
+            .catch(error => {
+                console.error(error);
+                document.querySelector('.community-feed').innerHTML = "<p>Failed to load community feed.</p>";
+            });
+    </script>
+
     <h3 class="mt-3">Overview</h3>
     <!-- Search Bar inside a Card -->
     <div class="card-custom">
@@ -66,7 +190,7 @@
             </select>
         </div>
 
-        <div class="card">
+        {{-- <div class="card">
             <div class="card-content">
                 <div class="user-info">
                     <div class="profile">
@@ -179,5 +303,9 @@
                 </div>
             </div>
         </div>
+
+            </div>
+        </div> --}}
+
     </div>
 @endsection

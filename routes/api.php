@@ -6,8 +6,11 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BabyShowerController;
 use App\Http\Controllers\IntroduceYourselfController;
 use App\Http\Controllers\BookConsultController;
+use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\EventsController;
+use App\Http\Controllers\PostsController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RepliesController;
 use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\UserDetailsController;
@@ -39,5 +42,9 @@ Route::post('/login/verify-otp', [AuthController::class, 'verifyOtp']);
 Route::post('/logout', [AuthController::class, 'logout']);
 
 Route::apiResource('/details-user', UserDetailsController::class);
+
+Route::apiResource('posts', PostsController::class);
+Route::apiResource('comments', CommentsController::class);
+Route::apiResource('replies', RepliesController::class);
 
 ?>
