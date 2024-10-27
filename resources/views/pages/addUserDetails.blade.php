@@ -31,7 +31,7 @@
                         <div class="col-md-6">
                             <div class="form-group mb-3">
                                 <label for="first_name"><span class="text-danger">*</span> First Name</label>
-                                <input type="text" class="form-control" id="first_name" name="first_name"
+                                <input type="text" class="form-control" id="fname" name="fname"
                                     placeholder="Enter First Name">
                             </div>
                             <div id="first_nameErrorMsg" class="text-danger font-weight-bold"></div>
@@ -39,7 +39,7 @@
                         <div class="col-md-6">
                             <div class="form-group mb-3">
                                 <label for="last_name"><span class="text-danger">*</span> Last Name</label>
-                                <input type="text" class="form-control" id="last_name" name="last_name"
+                                <input type="text" class="form-control" id="lname" name="lname"
                                     placeholder="Enter Last Name">
                             </div>
                             <div id="last_nameErrorMsg" class="text-danger font-weight-bold"></div>
@@ -77,7 +77,7 @@
                         <div class="col-md-4">
                             <div class="form-group mb-3">
                                 <label for="dob"><span class="text-danger">*</span> Date of Birth</label>
-                                <input type="date" class="form-control" id="datepicker" name="dob"
+                                <input type="date" class="form-control" id="dob" name="dob"
                                     placeholder="Select your date of birth">
                             </div>
                             <div id="datepickerErrorMsg" class="text-danger font-weight-bold"></div>
@@ -158,14 +158,14 @@
             $(document).on('submit', '#userDetails', function(e) {
                 e.preventDefault();
 
-                let fname = $('#first_name').val();
-                let lname = $('#last_name').val();
+                let fname = $('#fname').val();
+                let lname = $('#lname').val();
                 let city = $('#city').val();
                 let email = $('#email').val();
                 let country = $('#country').val();
-                let dob = $('#datepicker').val();
+                let dob = $('#dob').val();
                 let mobile = $('#mobile').val();
-                let bloodgroup = $('#blood_group').val();
+                let blood_group = $('#blood_group').val();
                 let address = $('#address').val();
 
                 let formData = {
@@ -176,7 +176,7 @@
                     country,
                     dob,
                     mobile,
-                    bloodgroup,
+                    blood_group,
                     address
                 };
 
@@ -212,7 +212,7 @@
 
             // date picker
             $(function() {
-                $("#datepicker").datepicker({
+                $("#dob").datepicker({
                     dateFormat: "dd-mm-yy"
                 });
             });

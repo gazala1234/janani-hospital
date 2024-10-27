@@ -36,9 +36,17 @@ $(document).ready(function () {
         alert("Video selected: " + this.files[0].name);
     });
 
-    // comment box js
+    // comment icon click event 
     $(".comment-icon").click(function () {
-        // Toggle the comment box below the icons
-        $(this).closest(".post-actions").next(".comment-box").toggle();
+        var commentBox = $(this).closest(".post-actions").next(".comment-box");
+        commentBox.toggle();
+        commentBox.find(".reply-comment .mainarea").hide();
+    });
+
+    // Reply icon click event
+    $(".reply-comment").click(function () {
+        var commentBox = $(this).closest(".post-actions").next(".comment-box");
+        commentBox.find(".reply-comment-box .mainarea").toggle();
+        commentBox.find(".comment-box .mainarea").hide();
     });
 });

@@ -58,13 +58,12 @@ class UserDetailsController extends Controller
             'fname' => 'required|string|max:255',
             'lname' => 'required|string|max:255',
             'city' => 'required|string|max:255',
-            'user_id' => 'required|exists:users,id',
-            'email' => 'required|email|unique:user_details,email',
-            'country' => 'required|string|max:255',
+            'email' => 'email|unique:user_details,email',
+            'country' => 'string|max:255',
             'dob' => 'required|date',
             'mobile' => 'required|digits_between:10,15|unique:user_details,mobile',
             'blood_group' => 'required|string|max:10',
-            'address' => 'required|string',
+            'address' => 'string',
             'img_path' => 'nullable|string',
         ]);
 

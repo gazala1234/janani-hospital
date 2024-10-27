@@ -74,7 +74,7 @@
         }
 
         h3 {
-            font-size: 0.5rem;
+            font-size: 1rem;
         }
     }
 </style>
@@ -181,7 +181,7 @@
                                 </div>
                             </a>
                             <hr>
-                            <div class="bookmarks px-5 py-4">
+                            <div class="bookmarks px-3 py-4">
                                 <div class="d-flex align-items-center user-profile">
                                     <div class="profile">
                                         <i class="fas fa-bookmark" style="font-size: 1.5rem;"></i>
@@ -240,34 +240,34 @@
     <!-- End #main -->
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> --}}
 
     <script>
-        async function sendAxiosRequest(method, apiEndpoint, data) {
-            let config = {
-                method: method,
-                maxBodyLength: Infinity,
-                url: `${apiEndpoint}`, // Use relative URL
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer {{ session('token') }}` // Authorization token
-                },
-                data: data
-            };
+        // async function sendAxiosRequest(method, apiEndpoint, data) {
+        //     let config = {
+        //         method: method,
+        //         maxBodyLength: Infinity,
+        //         url: `${apiEndpoint}`, // Use relative URL
+        //         headers: {
+        //             'Accept': 'application/json',
+        //             'Content-Type': 'application/json',
+        //             'Authorization': `Bearer {{ session('token') }}` // Authorization token
+        //         },
+        //         data: data
+        //     };
 
-            try {
-                const response = await axios.request(config);
-                return response;
-            } catch (error) {
-                if (error.response && error.response.status === 401) {
-                    alert('Please login to continue.');
-                    window.location.href = '/login'; // Redirect to login page
-                } else {
-                    throw error;
-                }
-            }
-        }
+        //     try {
+        //         const response = await axios.request(config);
+        //         return response;
+        //     } catch (error) {
+        //         if (error.response && error.response.status === 401) {
+        //             alert('Please login to continue.');
+        //             window.location.href = '/login'; // Redirect to login page
+        //         } else {
+        //             throw error;
+        //         }
+        //     }
+        // }
 
         $(document).ready(function() {
             $('#signoutButton').on('click', function() {
