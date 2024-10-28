@@ -1,5 +1,5 @@
 <li class="nav-item">
-    <a class="nav-link" href="{{ url('/dashboard') }}">
+    <a class="nav-link" href="{{ url('/api/dashboard') }}">
         <i class="bi bi-grid" style="font-size: 20px;"></i><span>Overview</span>
     </a>
 </li><!-- End Dashboard Nav -->

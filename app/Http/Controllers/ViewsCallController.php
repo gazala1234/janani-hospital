@@ -6,7 +6,15 @@ use Illuminate\Http\Request;
 
 class ViewsCallController extends Controller
 {
-   public function index(){
-    return view('dashboard');
-   }
+    // function to call dashboard
+    public function index()
+    {
+        return view('dashboard');
+    }
+
+    //    function to call user settings page 
+    public function getSettings()
+    {
+        return view('pages.addUserDetails');
+    }
 }

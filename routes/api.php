@@ -12,7 +12,6 @@ use App\Http\Controllers\PostsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RepliesController;
 use App\Http\Controllers\ServicesController;
-use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\UserDetailsController;
 use App\Http\Controllers\ViewsCallController;
 use Illuminate\Support\Facades\Route;
@@ -25,11 +24,11 @@ Route::group(['middleware' => ['web']], function () {
 
     Route::controller(ViewsCallController::class)->group(function () {
         Route::get('/dashboard', 'index');
+        Route::get('/settings', 'getSettings');
     });
 
     Route::apiResource('ask-doctor', AskDoctorController::class);
     Route::apiResource('book-consult', BookConsultController::class);
-    Route::apiResource('settings', SettingsController::class);
     Route::apiResource('services', ServicesController::class);
     Route::apiResource('events', EventsController::class);
     Route::apiResource('ask-suggestion', AskSuggestionController::class);
@@ -41,9 +40,6 @@ Route::group(['middleware' => ['web']], function () {
     Route::post('/login/verify-otp', [AuthController::class, 'verifyOtp']);
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::apiResource('/details-user', UserDetailsController::class);
-
-    Route::apiResource('/details-user', UserDetailsController::class);
-
     Route::apiResource('posts', PostsController::class);
     Route::apiResource('comments', CommentsController::class);
     Route::apiResource('replies', RepliesController::class);

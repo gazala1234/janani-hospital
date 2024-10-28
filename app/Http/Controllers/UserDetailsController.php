@@ -64,11 +64,17 @@ class UserDetailsController extends Controller
             'mobile' => 'required|digits_between:10,15|unique:user_details,mobile',
             'blood_group' => 'required|string|max:10',
             'address' => 'string',
-            'img_path' => 'nullable|string',
+            'img_path' => 'nullable|string'
         ]);
 
         try {
+            // Retrieve the user ID from the session and add it to the request data
+            $userId = session('id');
+            $request->merge(['user_id' => $userId]);
+
+            // Create the user detail record
             $userDetail = UserDetails::create($request->all());
+
             $response['status'] = true;
             $response['data'] = $userDetail;
             $response['message'] = 'User detail added successfully.';

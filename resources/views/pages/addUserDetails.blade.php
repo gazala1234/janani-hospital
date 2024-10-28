@@ -147,12 +147,9 @@
         </div>
     </div>
 
-@section('include-js-links')
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script src="https://code.jquery.com/ui/1.14.0/jquery-ui.js"></script>
-@endsection
 
-@section('js-script')
     <script>
         $(document).ready(function() {
             $(document).on('submit', '#userDetails', function(e) {
@@ -185,7 +182,7 @@
                         if (response.data.status) {
                             alert(response.data.message);
                             // Optional: Redirect or reload after success
-                            // window.location.href = "{{ url('/profile') }}";
+                            window.location.href = "{{ url('/profile') }}";
                         } else {
                             alert(response.data.message);
                             // response.data.status ? location.reload() : '';
@@ -218,6 +215,4 @@
             });
         });
     </script>
-@endsection
-
 @endsection
