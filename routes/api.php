@@ -46,5 +46,8 @@ Route::apiResource('/details-user', UserDetailsController::class);
 Route::apiResource('posts', PostsController::class);
 Route::apiResource('comments', CommentsController::class);
 Route::apiResource('replies', RepliesController::class);
+// routes/api.php
+Route::put('posts/{id}/like', [PostsController::class, 'like'])->name('posts.like');
+
 
 ?>

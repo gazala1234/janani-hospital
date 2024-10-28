@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Posts;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
 
 class PostsController extends Controller
@@ -14,7 +15,7 @@ class PostsController extends Controller
     public function index(Request $request)
     {
         try {
-            $query = Posts::with(['user.userDetails']);
+            $query = Posts::with(['user.userDetails','comments.user.userDetails']);
 
             // Apply other query string parameters dynamically
             foreach ($request->query() as $key => $value) {
@@ -127,11 +128,11 @@ class PostsController extends Controller
             $post = Posts::findOrFail($id);
 
             $validatedData = $request->validate([
-                'title' => 'nullable|string|max:255',
-                'content' => 'nullable|string',
-                'path' => 'nullable|string',
-                'type' => 'nullable|string',
-                'comments_count' => 'nullable|integer',
+                // 'title' => 'nullable|string|max:255',
+                // 'content' => 'nullable|string',
+                // 'path' => 'nullable|string',
+                // 'type' => 'nullable|string',
+                // 'comments_count' => 'nullable|integer',
                 'likes_count' => 'nullable|integer',
             ]);
 
@@ -183,4 +184,49 @@ class PostsController extends Controller
             return response()->json($response, 500);
         }
     }
+
+    public function like($id)
+    {
+        $response = [
+            'status' => false,
+            'data' => [],
+            'message' => '',
+        ];
+    
+        try {
+            // Find the post by ID
+            $post = Posts::findOrFail($id);
+            $userId = Auth::id(); // Get the currently authenticated user's ID
+    
+            // Decode the liked_by JSON field into an array
+            $likedBy = json_decode($post->user_id, true) ?? [];
+    
+            // Check if the user has already liked the post
+            if (in_array($userId, $likedBy)) {
+                $response['message'] = 'You have already liked this post.';
+                return response()->json($response, 403); // Forbidden
+            }
+    
+            // If not already liked, increment likes_count and add userId to liked_by array
+            $post->increment('likes_count');
+            $likedBy[] = $userId;
+            $post->liked_by = json_encode($likedBy); // Update liked_by field
+            $post->save();
+    
+            $response = [
+                'status' => true,
+                'data' => $post,
+                'message' => 'Post liked successfully.',
+            ];
+            return response()->json($response, 201); // success
+        } catch (\Exception $e) {
+            $response = [
+                'status' => false,
+                'data' => [],
+                'message' => 'Error occurred while liking the post: ' . $e->getMessage(),
+            ];
+            return response()->json($response, 500);
+        }
+    }
+    
 }
