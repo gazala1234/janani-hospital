@@ -3,31 +3,33 @@
 <link href="{{ asset('css/customfiles/chatting.css') }}" rel="stylesheet">
 <style>
     .liked i {
-    color: green; /* Green color when liked */
-}
+        color: green;
+        /* Green color when liked */
+    }
 </style>
 @section('maincontent')
-<script src="{{ asset('js/customjs/chatting.js') }}"></script>
+    <script src="{{ asset('js/customjs/chatting.js') }}"></script>
 
-<script>
-    sendAxiosRequest('get', `/api/posts?type=community_feed`, {})
-        .then(response => {
-            if (response.data.status) {
-                const feedContainer = document.querySelector('.community-feed');
-                const posts = response.data.data; // Array of posts
+    <script>
+        sendAxiosRequest('get', `/api/posts?type=community_feed`, {})
+            .then(response => {
+                if (response.data.status) {
+                    const feedContainer = document.querySelector('.community-feed');
+                    const posts = response.data.data; // Array of posts
 
-                if (posts.length > 0) {
-                    // Loop through each post and add to feed
-                    posts.forEach(post => {
-                        const user = post.user;
-                        const userDetails = user.user_details || {};
-                        const profileImage = userDetails.img_path || '../images/profile.jpg';
-                        const userName = `${userDetails.fname || ''} ${userDetails.lname || ''}`.trim() || 'Anonymous';
-                        let likesCount = post.likes_count || 0;
-                        let commentsCount = post.comments_count || 0;
+                    if (posts.length > 0) {
+                        // Loop through each post and add to feed
+                        posts.forEach(post => {
+                            const user = post.user;
+                            const userDetails = user.user_details || {};
+                            const profileImage = userDetails.img_path || '../images/profile.jpg';
+                            const userName = `${userDetails.fname || ''} ${userDetails.lname || ''}`.trim() ||
+                                'Anonymous';
+                            let likesCount = post.likes_count || 0;
+                            let commentsCount = post.comments_count || 0;
 
-                        // Begin constructing the HTML for the post card
-                        let postCard = `
+                            // Begin constructing the HTML for the post card
+                            let postCard = `
                         <div class="card" data-post-id="${post.id}">
                             <div class="card-content">
                                 <div class="user-info">
@@ -56,19 +58,21 @@
                                     </div>
                                 </div>`;
 
-                        // Construct comments HTML
-                        let commentsHTML = '';
-                        if (post.comments && post.comments.length > 0) {
-                            post.comments.forEach(comment => {
-                                const commentUser = comment.user || {};
-                                const commentUserDetails = commentUser.user_details || {};
-                                const commentUserName =
-                                    `${commentUserDetails.fname || ''} ${commentUserDetails.lname || ''}`.trim() || 'Anonymous';
-                                const commentProfileImage = commentUserDetails.img_path || '../images/profile.jpg';
-                                const commentLikesCount = comment.likes_count || 0;
-                                let commentsCommentCount = comment.comments_count || 0;
+                            // Construct comments HTML
+                            let commentsHTML = '';
+                            if (post.comments && post.comments.length > 0) {
+                                post.comments.forEach(comment => {
+                                    const commentUser = comment.user || {};
+                                    const commentUserDetails = commentUser.user_details || {};
+                                    const commentUserName =
+                                        `${commentUserDetails.fname || ''} ${commentUserDetails.lname || ''}`
+                                        .trim() || 'Anonymous';
+                                    const commentProfileImage = commentUserDetails.img_path ||
+                                        '../images/profile.jpg';
+                                    const commentLikesCount = comment.likes_count || 0;
+                                    let commentsCommentCount = comment.comments_count || 0;
 
-                                commentsHTML += `
+                                    commentsHTML += `
                                 <div class="reply-comment mt-4">
                                     <div class="user-info">
                                         <div class="profile">
@@ -85,12 +89,12 @@
                                         </div>
                                     </div>
                                 </div>`;
-                            });
-                        } else {
-                            commentsHTML = '<p>No comments available</p>';
-                        }
+                                });
+                            } else {
+                                commentsHTML = '<p>No comments available</p>';
+                            }
 
-                        postCard += `
+                            postCard += `
                             <div class="comment-box mt-3" style="display: none; width: 100%;">
                                 <div class="mainarea" style="position: relative;">
                                     <textarea class="form-control" rows="6" placeholder="Add a comment..."
@@ -116,51 +120,67 @@
                         </div>
                     </div>`;
 
-                        feedContainer.insertAdjacentHTML('beforeend', postCard);
-                    });
-
-                    // Like icon event listener
-                    document.querySelectorAll('.like-icon').forEach(icon => {
-                        icon.addEventListener('click', function() {
-                            const postCard = this.closest('.card');
-                            const id = postCard.getAttribute('data-post-id');
-                            const likeCountSpan = this.querySelector('.like-count');
-                            let currentLikes = parseInt(likeCountSpan.innerText);
-
-                            // Toggle like
-                            sendAxiosRequest('put', `/api/posts/${id}/like`,{})
-                                .then(response => {
-                                    if (response.data.status) {
-                                        likeCountSpan.innerText = ++currentLikes;
-                                        this.classList.add('liked'); // Add CSS for green color
-                                    }
-                                })
-                                .catch(error => console.error(error));
+                            feedContainer.insertAdjacentHTML('beforeend', postCard);
                         });
-                    });
 
-                    // Comment icon toggle comment section
-                    document.querySelectorAll('.comment-icon').forEach(icon => {
-                        icon.addEventListener('click', function() {
-                            const postCard = this.closest('.card-content');
-                            const commentBox = postCard.querySelector('.comment-box');
-                            const commentsSection = postCard.querySelector('.reply-comments-section');
-                            commentBox.style.display = commentBox.style.display == 'none' ? 'block' : 'none';
-                            commentsSection.style.display = commentsSection.style.display == 'none' ? 'block' : 'none';
+                        // Like icon event listener
+                        document.querySelectorAll('.like-icon').forEach(icon => {
+                            icon.addEventListener('click', function() {
+                                const postCard = this.closest('.card');
+                                const id = postCard.getAttribute('data-post-id');
+                                const likeCountSpan = this.querySelector('.like-count');
+                                let currentLikes = parseInt(likeCountSpan.innerText);
+                                const isLiked = this.classList.contains(
+                                'liked'); // Check if the post is currently liked
+
+                                // Determine request type based on like/unlike
+                                sendAxiosRequest('put', `/api/posts/${id}/like`, {})
+                                    .then(response => {
+                                        if (response.data.status) {
+                                            // Toggle like/unlike and update count
+                                            if (isLiked) {
+                                                likeCountSpan.innerText = --
+                                                currentLikes; // Decrement if already liked
+                                                this.classList.remove(
+                                                'liked'); // Remove the liked class for unlike
+                                            } else {
+                                                likeCountSpan.innerText = ++
+                                                currentLikes; // Increment if not liked
+                                                this.classList.add(
+                                                'liked'); // Add liked class for like
+                                            }
+                                        }
+                                    })
+                                    .catch(error => console.error(error));
+                            });
                         });
-                    });
+
+
+                        // Comment icon toggle comment section
+                        document.querySelectorAll('.comment-icon').forEach(icon => {
+                            icon.addEventListener('click', function() {
+                                const postCard = this.closest('.card-content');
+                                const commentBox = postCard.querySelector('.comment-box');
+                                const commentsSection = postCard.querySelector(
+                                    '.reply-comments-section');
+                                commentBox.style.display = commentBox.style.display == 'none' ?
+                                    'block' : 'none';
+                                commentsSection.style.display = commentsSection.style.display ==
+                                    'none' ? 'block' : 'none';
+                            });
+                        });
+                    } else {
+                        feedContainer.innerHTML = "<p>No community feed available.</p>";
+                    }
                 } else {
-                    feedContainer.innerHTML = "<p>No community feed available.</p>";
+                    document.querySelector('.community-feed').innerHTML = "<p>No community feed available.</p>";
                 }
-            } else {
-                document.querySelector('.community-feed').innerHTML = "<p>No community feed available.</p>";
-            }
-        })
-        .catch(error => {
-            console.error(error);
-            document.querySelector('.community-feed').innerHTML = "<p>Failed to load community feed.</p>";
-        });
-</script>
+            })
+            .catch(error => {
+                console.error(error);
+                document.querySelector('.community-feed').innerHTML = "<p>Failed to load community feed.</p>";
+            });
+    </script>
 
     <h3 class="mt-3">Overview</h3>
     <!-- Search Bar inside a Card -->
