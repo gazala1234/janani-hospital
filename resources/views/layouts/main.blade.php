@@ -192,7 +192,7 @@
                     <div class="card">
                         <div class="card-body py-4 px-4">
                             <a href="{{ url('api/profile') }}">
-                                <div class="d-flex align-items-center user-profile">
+                                <div class="align-items-center user-profile">
                                     <div class="avatar profile avatar-xl">
                                         <img src="../images/profile.jpg" alt="User">
                                     </div>

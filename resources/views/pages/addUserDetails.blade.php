@@ -182,10 +182,9 @@
                         if (response.data.status) {
                             alert(response.data.message);
                             // Optional: Redirect or reload after success
-                            window.location.href = "{{ url('/profile') }}";
+                            window.location.href = "{{ url('/') }}";
                         } else {
                             alert(response.data.message);
-                            // response.data.status ? location.reload() : '';
                         }
                     })
                     .catch(error => {
