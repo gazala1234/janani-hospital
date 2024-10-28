@@ -34,5 +34,10 @@ class User extends Authenticatable
     {
         return $this->hasOne(UserDetails::class, 'user_id', 'id');
     }
+
+    public function likes()
+    {
+        return $this->hasMany(Likes::class);
+    }
     
 }

@@ -1,8 +1,14 @@
 @extends('layouts.main')
 
 <link href="{{ asset('css/customfiles/chatting.css') }}" rel="stylesheet">
-
+<style>
+    .liked i {
+    color: green; /* Green color when liked */
+}
+</style>
 @section('maincontent')
+<script src="{{ asset('js/customjs/chatting.js') }}"></script>
+
 <script>
     sendAxiosRequest('get', `/api/posts?type=community_feed`, {})
         .then(response => {
@@ -155,9 +161,6 @@
             document.querySelector('.community-feed').innerHTML = "<p>Failed to load community feed.</p>";
         });
 </script>
-
-
-
 
     <h3 class="mt-3">Overview</h3>
     <!-- Search Bar inside a Card -->

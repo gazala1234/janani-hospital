@@ -15,7 +15,7 @@ class PostsController extends Controller
     public function index(Request $request)
     {
         try {
-            $query = Posts::with(['user.userDetails','comments.user.userDetails']);
+            $query = Posts::with(['user.userDetails', 'comments.user.userDetails']);
 
             // Apply other query string parameters dynamically
             foreach ($request->query() as $key => $value) {
@@ -192,41 +192,32 @@ class PostsController extends Controller
             'data' => [],
             'message' => '',
         ];
-    
+
         try {
-            // Find the post by ID
             $post = Posts::findOrFail($id);
-            $userId = Auth::id(); // Get the currently authenticated user's ID
-    
-            // Decode the liked_by JSON field into an array
-            $likedBy = json_decode($post->user_id, true) ?? [];
-    
-            // Check if the user has already liked the post
-            if (in_array($userId, $likedBy)) {
-                $response['message'] = 'You have already liked this post.';
-                return response()->json($response, 403); // Forbidden
+            $user = Auth::user();
+
+            if ($post->likedBy($user)) {
+                // If user already liked the post, unlike it
+                $post->likes()->where('user_id', $user->id)->delete();
+                $response['message'] = 'Post unliked successfully.';
+            } else {
+                // If not already liked, create a like
+                $post->likes()->create(['user_id' => $user->id]);
+                $response['message'] = 'Post liked successfully.';
             }
-    
-            // If not already liked, increment likes_count and add userId to liked_by array
-            $post->increment('likes_count');
-            $likedBy[] = $userId;
-            $post->liked_by = json_encode($likedBy); // Update liked_by field
-            $post->save();
-    
-            $response = [
-                'status' => true,
-                'data' => $post,
-                'message' => 'Post liked successfully.',
-            ];
-            return response()->json($response, 201); // success
+
+            $response['status'] = true;
+            $response['data'] = ['likes_count' => $post->likes()->count()];
+
+            return response()->json($response, 200);
         } catch (\Exception $e) {
             $response = [
                 'status' => false,
-                'data' => [],
-                'message' => 'Error occurred while liking the post: ' . $e->getMessage(),
+                'data' => array(),
+                'message' => 'Error occured while: ' . $e->getMessage(),
             ];
             return response()->json($response, 500);
         }
     }
-    
 }
