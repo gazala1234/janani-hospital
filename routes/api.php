@@ -14,37 +14,36 @@ use App\Http\Controllers\RepliesController;
 use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\UserDetailsController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\ViewsCallController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+// Route::get('/user', function (Request $request) {
+//     return $request->user();
+// })->middleware('auth:sanctum');
 
-// Login & Register routes start
-Route::post('user-auth-login', [AuthController::class,'login']);
-Route::apiResource('user-auth', AuthController::class);
-// Login & Register routes end
+Route::group(['middleware' => ['web']], function () {
 
-Route::apiResource('ask-doctor', AskDoctorController::class);
-Route::apiResource('book-consult', BookConsultController::class);
-Route::apiResource('settings', SettingsController::class);
-Route::apiResource('services', ServicesController::class);
-Route::apiResource('events', EventsController::class);
-Route::apiResource('ask-suggestion', AskSuggestionController::class);
-Route::apiResource('baby-shower', BabyShowerController::class);
-Route::apiResource('introduce-yourself', IntroduceYourselfController::class);
-Route::apiResource('profile', ProfileController::class);
+    Route::controller(ViewsCallController::class)->group(function () {
+        Route::get('/dashboard','index');
+    });
 
-Route::post('/login/send-otp', [AuthController::class, 'sendOtp']);
-Route::post('/login/verify-otp', [AuthController::class, 'verifyOtp']);
+    Route::apiResource('ask-doctor', AskDoctorController::class);
+    Route::apiResource('book-consult', BookConsultController::class);
+    Route::apiResource('settings', SettingsController::class);
+    Route::apiResource('services', ServicesController::class);
+    Route::apiResource('events', EventsController::class);
+    Route::apiResource('ask-suggestion', AskSuggestionController::class);
+    Route::apiResource('baby-shower', BabyShowerController::class);
+    Route::apiResource('introduce-yourself', IntroduceYourselfController::class);
+    Route::apiResource('profile', ProfileController::class);
 
-Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('/login/send-otp', [AuthController::class, 'sendOtp']);
+    Route::post('/login/verify-otp', [AuthController::class, 'verifyOtp']);
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::apiResource('/details-user', UserDetailsController::class);
 
-Route::apiResource('/details-user', UserDetailsController::class);
-
-Route::apiResource('posts', PostsController::class);
-Route::apiResource('comments', CommentsController::class);
-Route::apiResource('replies', RepliesController::class);
-
-?>
+    Route::apiResource('posts', PostsController::class);
+    Route::apiResource('comments', CommentsController::class);
+    Route::apiResource('replies', RepliesController::class);
+    
+});
