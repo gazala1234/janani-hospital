@@ -192,32 +192,46 @@ class PostsController extends Controller
             'data' => [],
             'message' => '',
         ];
-
+    
         try {
             $post = Posts::findOrFail($id);
-            $user = Auth::user();
-
-            if ($post->likedBy($user)) {
+            $userId = session('id');  // Retrieve user ID from session
+    
+            if (!$userId) {
+                return response()->json(['status' => false, 'message' => 'User not authenticated'], 401);
+            }
+    
+            if ($post->likedBy($userId)) {
                 // If user already liked the post, unlike it
-                $post->likes()->where('user_id', $user->id)->delete();
+                $post->likes()->where('user_id', $userId)->delete();
+    
+                // Decrement the likes_count column
+                $post->decrement('likes_count');
+    
                 $response['message'] = 'Post unliked successfully.';
             } else {
                 // If not already liked, create a like
-                $post->likes()->create(['user_id' => $user->id]);
+                $post->likes()->create(['user_id' => $userId]);
+    
+                // Increment the likes_count column
+                $post->increment('likes_count');
+    
                 $response['message'] = 'Post liked successfully.';
             }
-
+    
             $response['status'] = true;
-            $response['data'] = ['likes_count' => $post->likes()->count()];
-
+            $response['data'] = ['likes_count' => $post->likes_count];  // Return updated likes_count directly
+    
             return response()->json($response, 200);
         } catch (\Exception $e) {
             $response = [
                 'status' => false,
-                'data' => array(),
-                'message' => 'Error occured while: ' . $e->getMessage(),
+                'data' => [],
+                'message' => 'Error occurred: ' . $e->getMessage(),
             ];
             return response()->json($response, 500);
         }
     }
+    
+    
 }
