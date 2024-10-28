@@ -205,7 +205,7 @@
                                 </div>
                                 <div class="parent">
                                     <div class="guest">
-                                        Guest
+                                        {{ session('role') != null ? session('role') : 'Guest' }}
                                     </div>
                                 </div>
                             </a>
@@ -280,7 +280,7 @@
                     },
                     success: function(response) {
                         if (response.status) {
-                            alert(response.message);
+                            // alert(response.message);
                             window.location.href =
                                 "{{ url('/') }}";
                         } else {

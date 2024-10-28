@@ -28,15 +28,21 @@ $(document).ready(function () {
 
     // Handle file selection for photo
     $("#photoInput").change(function () {
-        alert("Photo selected: " + this.files[0].name);
+        const photoName = this.files[0]
+            ? this.files[0].name
+            : "No file selected";
+        $("#postContent").append(`<br><strong>Photo:</strong> ${photoName}`);
     });
 
     // Handle file selection for video
     $("#videoInput").change(function () {
-        alert("Video selected: " + this.files[0].name);
+        const videoName = this.files[0]
+            ? this.files[0].name
+            : "No file selected";
+        $("#postContent").append(`<br><strong>Video:</strong> ${videoName}`);
     });
 
-    // comment icon click event 
+    // comment icon click event
     $(".comment-icon").click(function () {
         var commentBox = $(this).closest(".post-actions").next(".comment-box");
         commentBox.toggle();

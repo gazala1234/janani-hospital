@@ -169,6 +169,8 @@ class AuthController extends Controller
     public function logout()
     {
         auth()->logout();
+        session()->flush();
+
         $response = array(
             'status' => true,
             'message' => 'logout successfully',
@@ -244,6 +246,15 @@ class AuthController extends Controller
                     ]
                 );
 
+                // Start session and add user details
+                session([
+                    'id' => $user->id,
+                    'mobile' => $user->mobile,
+                    'role' => $user->role,
+                    'userDetails' => $user->userDetails ? $user->userDetails->toArray() : [],
+                ]);
+                // dd(session()->all());
+
                 $response = [
                     'status' => true,
                     'data' => [
@@ -253,6 +264,7 @@ class AuthController extends Controller
                     'message' => 'OTP verified. You are logged in.',
                 ];
 
+                // return redirect()->route('dashboard');
                 return response()->json($response, 200);
             } else {
                 $response['message'] = 'Invalid or expired OTP.';

@@ -8,6 +8,9 @@
     <meta content="" name="keywords">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Janani - Multispeciality Hospital</title>
+
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+
     @include('links')
 </head>
 
@@ -23,6 +26,15 @@
                                 <div class="card-body mb-5">
                                     <div class="pt-3 pb-2">
                                         <h5 class="card-title text-center pb-0 fs-4">Login</h5>
+                                    </div>
+
+                                    <!-- Dismissable alert for OTP -->
+                                    <div id="otpAlert" class="alert alert-success alert-dismissible fade show ms-auto"
+                                        role="alert" style="display: none;">
+                                        <strong>Your Login OTP:</strong> <span id="otpValue"></span>
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
                                     </div>
 
                                     <form class="row g-3" id="otpLoginForm">
@@ -68,6 +80,9 @@
         </div>
     </main>
 
+    {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script> --}}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
@@ -103,7 +118,9 @@
                         mobile: mobile
                     })
                     .then(response => {
-                        alert(response.data.message);
+                        // Show OTP in alert
+                        $('#otpValue').text(response.data.data.otp);
+                        $('#otpAlert').show(); // Show the alert
                         $('#otpSection, #verifyOtpSection').show(); // Show OTP input and verify button
                     })
                     .catch(error => {
@@ -127,8 +144,8 @@
                 sendAxiosRequest('post', '/api/login/verify-otp', formData)
                     .then(response => {
                         if (response.data.status) {
-                            alert(response.data.message);
-                            window.location.href = "{{ url('/dashboard') }}"; // Adjust URL as needed
+                            // alert(response.data.message);
+                            window.location.href = "{{ url('/api/dashboard') }}"; // Adjust URL as needed
                         } else {
                             alert(response.data.message);
                         }
