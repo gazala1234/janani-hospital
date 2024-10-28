@@ -86,7 +86,7 @@
             <div class="d-flex align-items-center justify-content-between w-100">
                 <!-- Logo Section -->
                 <div class="d-flex col-md-2 justify-content-center">
-                    <a href="{{ url('/dashboard') }}">
+                    <a href="{{ url('/api/dashboard') }}">
                         <img src="../images/janani-logo.png" class="hospital-logo" alt="Logo">
                     </a>
                 </div>
@@ -103,39 +103,41 @@
 
                 <!-- Signin and Profile Sections -->
                 <div class="d-flex align-items-center">
-                    <div class="me-3">
-                        <a href="{{ route('register') }}" class="text-decoration-none me-3">
-                            <button type="button" class="btn btn-outline-primary small-btn">Signin</button>
-                            <!-- Added small-btn class -->
-                        </a>
-                    </div>
-                    <div class="dropdown">
-                        <a href="#" class="d-flex align-items-center text-decoration-none" id="profileDropdown"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="../images/profile.jpg" alt="Profile Logo" class="rounded-circle" width="60"
-                                height="60">
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
-                            <li>
-                                <a class="dropdown-item" href="{{ url('api/profile') }}">
-                                    <i class="bi bi-person-circle me-2"></i> View Profile
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="{{ url('api/settings') }}">
-                                    <i class="bi bi-gear me-2"></i> Settings
-                                </a>
-                            </li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li>
-                                <a class="dropdown-item" id="signoutButton" href="javascript:void(0);">
-                                    <i class="bi bi-box-arrow-right me-2"></i> Signout
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                    @if (!session()->has('role'))
+                        <div class="me-3">
+                            <a href="{{ url('/') }}" class="text-decoration-none me-3">
+                                <button type="button" class="btn btn-outline-primary small-btn">Signin</button>
+                            </a>
+                        </div>
+                    @else
+                        <div class="dropdown">
+                            <a href="#" class="d-flex align-items-center text-decoration-none"
+                                id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="../images/profile.jpg" alt="Profile Logo" class="rounded-circle"
+                                    width="60" height="60">
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                                <li>
+                                    <a class="dropdown-item" href="{{ url('api/profile') }}">
+                                        <i class="bi bi-person-circle me-2"></i> View Profile
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ url('api/settings') }}">
+                                        <i class="bi bi-gear me-2"></i> Settings
+                                    </a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" id="signoutButton" href="javascript:void(0);">
+                                        <i class="bi bi-box-arrow-right me-2"></i> Signout
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -194,18 +196,29 @@
                                     <div class="avatar profile avatar-xl">
                                         <img src="../images/profile.jpg" alt="User">
                                     </div>
+                                    @php
+                                        $role = session('role');
+                                        $userDetails = session('userDetails');
+                                    @endphp
+
                                     <div class="ms-3 name">
                                         <h5 class="font-bold">
-                                            {{ session('role') == 'patient' ? session('userDetails')['fname'] ?? 'Patient' : 'Guest' }}
+                                            {{ $role
+                                                ? (($userDetails['fname'] ?? null) && ($userDetails['lname'] ?? null)
+                                                    ? $userDetails['fname'] . ' ' . $userDetails['lname']
+                                                    : 'Patient')
+                                                : 'Guest' }}
                                         </h5>
                                         <h6 class="text-muted mb-0">
-                                            {{ session('userDetails')['email'] ?? '@guestmail' }}
+                                            {{ $userDetails['email'] ?? '@guestmail' }}
                                         </h6>
                                     </div>
+
+
                                 </div>
                                 <div class="parent">
                                     <div class="guest">
-                                        Guest
+                                        {{ session('role') != null ? session('role') : 'Guest' }}
                                     </div>
                                 </div>
                             </a>
@@ -280,7 +293,7 @@
                     },
                     success: function(response) {
                         if (response.status) {
-                            alert(response.message);
+                            // alert(response.message);
                             window.location.href =
                                 "{{ url('/') }}";
                         } else {

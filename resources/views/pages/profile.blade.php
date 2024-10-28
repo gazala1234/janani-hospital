@@ -70,9 +70,18 @@
         <div class="card_background_img"></div>
         <div class="card_profile_img"></div>
         <div class="user_details text-center">
-            <h3>Guest Name</h3>
-            <h6>@Guestmail</h6>
-            <h6>Guest</h6>
+            @php
+                $role = session('role');
+                $userDetails = session('userDetails');
+            @endphp
+            <h3>{{ $role
+                ? (($userDetails['fname'] ?? null) && ($userDetails['lname'] ?? null)
+                    ? $userDetails['fname'] . ' ' . $userDetails['lname']
+                    : 'Patient')
+                : 'Guest' }}
+            </h3>
+            <h6>{{ $userDetails['email'] ?? '@guestmail' }}</h6>
+            <h6>{{ session('role') }}</h6>
             <a href="{{ url('api/settings') }}" class="text-decoration-none">
                 <button type="button" class="btn btn-outline-primary my-3">Edit Profile</button>
             </a>
@@ -82,7 +91,7 @@
             </a>
         </div>
         <div class="card_count">
-            <div class="count">
+            {{-- <div class="count">
                 <div class="followers">
                     <h3>2.4M</h3>
                     <h6>Followers</h6>
@@ -91,7 +100,7 @@
                     <h3>202</h3>
                     <h6>Followings</h6>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 @endsection
