@@ -3,8 +3,8 @@
 <link href="{{ asset('css/customfiles/chatting.css') }}" rel="stylesheet">
 
 @section('maincontent')
-    <div class="container mt-5">
-        <h3>Update Profile</h3>
+    <div class="container mt-5 card">
+        <h3 class="text-center mt-3">Update Profile</h3>
         <!-- Nav tabs -->
         <ul class="nav nav-tabs mt-3" id="profileTabs" role="tablist">
             <li class="nav-item">
@@ -30,19 +30,19 @@
                     <div class="row my-3">
                         <div class="col-md-6">
                             <div class="form-group mb-3">
-                                <label for="first_name"><span class="text-danger">*</span> First Name</label>
+                                <label for="fname"><span class="text-danger">*</span> First Name</label>
                                 <input type="text" class="form-control" id="fname" name="fname"
                                     placeholder="Enter First Name">
                             </div>
-                            <div id="first_nameErrorMsg" class="text-danger font-weight-bold"></div>
+                            <div id="fnameErrorMsg" class="text-danger font-weight-bold"></div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group mb-3">
-                                <label for="last_name"><span class="text-danger">*</span> Last Name</label>
+                                <label for="lname"><span class="text-danger">*</span> Last Name</label>
                                 <input type="text" class="form-control" id="lname" name="lname"
                                     placeholder="Enter Last Name">
                             </div>
-                            <div id="last_nameErrorMsg" class="text-danger font-weight-bold"></div>
+                            <div id="lnameErrorMsg" class="text-danger font-weight-bold"></div>
 
                         </div>
                     </div>
@@ -80,15 +80,15 @@
                                 <input type="date" class="form-control" id="dob" name="dob"
                                     placeholder="Select your date of birth">
                             </div>
-                            <div id="datepickerErrorMsg" class="text-danger font-weight-bold"></div>
+                            <div id="dobErrorMsg" class="text-danger font-weight-bold"></div>
 
                         </div>
 
                         <div class="col-md-4">
                             <div class="form-group mb-3">
-                                <label for="mobile"><span class="text-danger">*</span> Mobile No</label>
-                                <input type="text" class="form-control" id="mobile" name="mobile"
-                                    placeholder="Enter Mobile No">
+                                <label for="mobile"><span class="text-danger">*</span> Phone</label>
+                                <input type="number" class="form-control" id="mobile" name="mobile"
+                                    placeholder="Enter Phone No">
                             </div>
                             <div id="mobileErrorMsg" class="text-danger font-weight-bold"></div>
 
@@ -117,8 +117,9 @@
                         <label for="address">Address</label>
                         <textarea class="form-control" id="address" name="address" rows="3" placeholder="Enter Current Address"></textarea>
                     </div>
-
-                    <button type="submit" class="btn btn-primary">Update Personal Information</button>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Update Profile</button>
+                    </div>
                 </form>
             </div>
 
@@ -129,17 +130,17 @@
                     <div class="form-group my-4">
                         <label for="old_password"><span class="text-danger">*</span> Old Password</label>
                         <input type="password" class="form-control" id="old_password" name="old_password"
-                            placeholder="Enter your old password" required>
+                            placeholder="Enter your old password">
                     </div>
                     <div class="form-group my-4">
                         <label for="new_password"><span class="text-danger">*</span> New Password</label>
                         <input type="password" class="form-control" id="new_password" name="new_password"
-                            placeholder="Enter your new password" required>
+                            placeholder="Enter your new password">
                     </div>
                     <div class="form-group my-4">
                         <label for="confirm_password"><span class="text-danger">*</span> Confirm Password</label>
                         <input type="password" class="form-control" id="confirm_password" name="confirm_password"
-                            placeholder="Confirm your new password" required>
+                            placeholder="Confirm your new password">
                     </div>
                     <button type="submit" class="btn btn-primary">Update Password</button>
                 </form>

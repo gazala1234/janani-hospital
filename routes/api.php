@@ -25,6 +25,8 @@ Route::group(['middleware' => ['web']], function () {
     Route::controller(ViewsCallController::class)->group(function () {
         Route::get('/dashboard', 'index');
         Route::get('/settings', 'getSettings');
+        Route::get('/book-page', 'getBookConsult');
+        Route::get('/event-page', 'getEvents');
     });
 
     Route::apiResource('ask-doctor', AskDoctorController::class);

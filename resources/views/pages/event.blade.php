@@ -2,528 +2,263 @@
 
 <link href="{{ asset('css/customfiles/chatting.css') }}" rel="stylesheet">
 
+<style>
+    .card-image {
+        width: 350px;
+        height: auto;
+    }
+
+    .card-img-right {
+        width: 100%;
+        height: auto;
+        object-fit: fill;
+        border: 2px solid #20948b;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+    }
+
+    .text-muted {
+        font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+        .card {
+            flex-direction: column;
+        }
+
+        .card-image {
+            width: 100%;
+            height: 200px;
+        }
+    }
+</style>
+
 @section('maincontent')
-    <div class="container mt-5">
-        <div class="left">
-            <div class="calendar">
-                <div class="month">
-                    <i class="bi bi-caret-left prev"></i>
-                    <div class="date">december 2015</div>
-                    <i class="bi bi-caret-right next"></i>
-                </div>
-                <div class="weekdays">
-                    <div>Sun</div>
-                    <div>Mon</div>
-                    <div>Tue</div>
-                    <div>Wed</div>
-                    <div>Thu</div>
-                    <div>Fri</div>
-                    <div>Sat</div>
-                </div>
-                <div class="days"></div>
-                <div class="goto-today">
-                    <div class="goto">
-                        <input type="text" placeholder="mm/yyyy" class="date-input" />
-                        <button class="goto-btn">Go</button>
+    <div class="container mt-5 card">
+        <h3 class="text-center mt-3">Events History</h3>
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs mt-3" id="profileTabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="personal-tab" data-bs-toggle="tab" data-bs-target="#personal" role="tab"
+                    aria-controls="personal" aria-selected="true">
+                    Schedule New Event
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="upcoming-events-tab" data-bs-toggle="tab" data-bs-target="#upcoming-events"
+                    role="tab" aria-controls="upcoming-events" aria-selected="false">
+                    Upcoming Events
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="past-events-tab" data-bs-toggle="tab" data-bs-target="#past-events" role="tab"
+                    aria-controls="past-events" aria-selected="false">
+                    Past Events
+                </a>
+            </li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <!-- Add New Event Tab -->
+            <div class="tab-pane fade show active" id="personal" role="tabpanel" aria-labelledby="personal-tab">
+                <form id="eventDetails" enctype="multipart/form-data">
+                    @csrf
+                    <div class="form-group my-3">
+                        <label for="event_mode"><span class="text-danger">*</span> Event Mode</label>
+                        <select class="form-control" id="event_mode" name="event_mode">
+                            <option value="">Select Event Mode</option>
+                            <option value="Virtual">Virtual</option>
+                            <option value="Physical">Physical</option>
+                        </select>
+                        <div id="eventModeErrorMsg" class="text-danger font-weight-bold"></div>
                     </div>
-                    <button class="today-btn">Today</button>
+                    <div class="form-group mb-3" id="addressOrLinkField" style="display: none;">
+                        <label id="addressOrLinkLabel" for="address_or_link"><span class="text-danger">*</span>
+                            Address/Link</label>
+                        <input type="text" class="form-control" id="address_or_link" name="address_or_link"
+                            placeholder="">
+                        <div id="address_or_linkErrorMsg" class="text-danger font-weight-bold"></div>
+                    </div>
+
+                    <div class="form-group my-3">
+                        <label for="title"><span class="text-danger">*</span> Event Title</label>
+                        <input type="text" class="form-control" id="title" name="title"
+                            placeholder="Enter Event Title">
+                        <div id="titleErrorMsg" class="text-danger font-weight-bold"></div>
+                    </div>
+
+                    <div class="form-group my-3">
+                        <label for="description"><span class="text-danger">*</span> Description</label>
+                        <textarea class="form-control" id="description" name="description" rows="3" placeholder="Enter Event Description"></textarea>
+                        <div id="descriptionErrorMsg" class="text-danger font-weight-bold"></div>
+                    </div>
+
+                    <div class="row my-3">
+                        <div class="col-md-4">
+                            <div class="form-group mb-3">
+                                <label for="date"><span class="text-danger">*</span> Date</label>
+                                <input type="date" class="form-control" id="date" name="date">
+                            </div>
+                            <div id="dateErrorMsg" class="text-danger font-weight-bold"></div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group mb-3">
+                                <label for="start_time"><span class="text-danger">*</span> Start Time</label>
+                                <input type="time" class="form-control" id="start_time" name="start_time">
+                            </div>
+                            <div id="start_timeErrorMsg" class="text-danger font-weight-bold"></div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group mb-3">
+                                <label for="end_time"><span class="text-danger">*</span> End Time</label>
+                                <input type="time" class="form-control" id="end_time" name="end_time">
+                            </div>
+                            <div id="end_timeErrorMsg" class="text-danger font-weight-bold"></div>
+                        </div>
+                    </div>
+
+                    <!-- Image Upload Field -->
+                    <div class="form-group my-3">
+                        <label for="event_image">Event Image</label>
+                        <input type="file" class="form-control" id="event_image" name="event_image"
+                            accept="image/*">
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Add Event</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Scheduled Events Tab -->
+            <div class="tab-pane fade" id="upcoming-events" role="tabpanel" aria-labelledby="upcoming-events-tab">
+                <div class="p-3">
+                    <div class="card flex-row align-items-center row shadow-sm p-3">
+                        <div class="card-body col-md-6">
+                            <h5 class="card-title">Busting Maternal Myths</h5>
+                            <p class="card-text"><strong>Event Mode:</strong> Virtual</p>
+                            <p class="card-text"><strong>Description:</strong> Busting Maternal Myths</p>
+                            <p class="text-muted"><i class="bi bi-calendar me-2"></i> Oct 15, 2024</p>
+                            <p class="text-muted"><i class="bi bi-clock me-2"></i> 10:00 AM - 12:00 PM</p>
+                        </div>
+                        <div class="card-image col-md-6">
+                            <a href="../images/event.jpeg" target="_blank">
+                                <img src="../images/event.jpeg" class="card-img-right shadow" alt="Event Image">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-3">
+                    <div class="card flex-row align-items-center row shadow-sm p-3">
+                        <div class="card-body col-md-6">
+                            <h5 class="card-title">Another Event Title</h5>
+                            <p class="card-text"><strong>Event Mode:</strong> Physical</p>
+                            <p class="card-text"><strong>Description:</strong> Another brief description for the next
+                                event, keeping it concise.</p>
+                            <p class="text-muted"><strong><i class="bi bi-calendar me-2"></i></strong> Oct 20, 2024</p>
+                            <p class="text-muted"><strong><i class="bi bi-clock me-2"></i></strong> 3:00 PM - 5:00 PM</p>
+                        </div>
+                        <div class="card-image col-md-6">
+                            <a href="../images/event1.jpg" target="_blank">
+                                <img src="../images/event1.jpg" class="card-img-right shadow" alt="Event Image">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Past Events Tab -->
+            <div class="tab-pane fade" id="past-events" role="tabpanel" aria-labelledby="past-events-tab">
+                <div class="p-3">
+                    <div class="card flex-row align-items-center row shadow-sm p-3">
+                        <div class="card-body col-md-6">
+                            <h5 class="card-title">Busting Maternal Myths</h5>
+                            <p class="card-text"><strong>Event Mode:</strong> Virtual</p>
+                            <p class="card-text"><strong>Description:</strong> Busting Maternal Myths</p>
+                            <p class="text-muted"><i class="bi bi-calendar me-2"></i> Oct 15, 2024</p>
+                            <p class="text-muted"><i class="bi bi-clock me-2"></i> 10:00 AM - 12:00 PM</p>
+                        </div>
+                        <div class="card-image col-md-6">
+                            <img src="../images/event.jpeg" class="card-img-right" alt="Event Image">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-3">
+                    <div class="card flex-row align-items-center row shadow-sm p-3">
+                        <div class="card-body col-md-6">
+                            <h5 class="card-title">Another Event Title</h5>
+                            <p class="card-text"><strong>Event Mode:</strong> Physical</p>
+                            <p class="card-text"><strong>Description:</strong> Another brief description for the next
+                                event, keeping it concise.</p>
+                            <p class="text-muted"><strong><i class="bi bi-calendar me-2"></i></strong> Oct 20, 2024</p>
+                            <p class="text-muted"><strong><i class="bi bi-clock me-2"></i></strong> 3:00 PM - 5:00 PM</p>
+                        </div>
+                        <div class="card-image col-md-6">
+                            <img src="../images/event1.jpg" class="card-img-right" alt="Event Image">
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="right">
-            <div class="today-date">
-                <div class="event-day">wed</div>
-                <div class="event-date">12th december 2022</div>
-            </div>
-            <div class="events"></div>
-            <div class="add-event-wrapper">
-                <div class="add-event-header">
-                    <div class="title">Add Event</div>
-                    <i class="bi bi-x-circle-fill close"></i>
-                    {{-- <i class="bi bi-x-lg close"></i> --}}
-                    {{-- <i class="fas fa-times close"></i> --}}
-                </div>
-                <div class="add-event-body">
-                    <div class="add-event-input">
-                        <input type="text" placeholder="Event Name" class="event-name" />
-                    </div>
-                    <div class="add-event-input">
-                        <input type="text" placeholder="Event Time From" class="event-time-from" />
-                    </div>
-                    <div class="add-event-input">
-                        <input type="text" placeholder="Event Time To" class="event-time-to" />
-                    </div>
-                </div>
-                <div class="add-event-footer">
-                    <button class="add-event-btn">Add Event</button>
-                </div>
-            </div>
-        </div>
-        <button class="add-event">
-            <i class="bi bi-plus-lg"></i>
-        </button>
     </div>
-@endsection
 
-@section('js-script')
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script>
-        const calendar = document.querySelector(".calendar"),
-            date = document.querySelector(".date"),
-            daysContainer = document.querySelector(".days"),
-            prev = document.querySelector(".prev"),
-            next = document.querySelector(".next"),
-            todayBtn = document.querySelector(".today-btn"),
-            gotoBtn = document.querySelector(".goto-btn"),
-            dateInput = document.querySelector(".date-input"),
-            eventDay = document.querySelector(".event-day"),
-            eventDate = document.querySelector(".event-date"),
-            eventsContainer = document.querySelector(".events"),
-            addEventBtn = document.querySelector(".add-event"),
-            addEventWrapper = document.querySelector(".add-event-wrapper "),
-            addEventCloseBtn = document.querySelector(".close "),
-            addEventTitle = document.querySelector(".event-name "),
-            addEventFrom = document.querySelector(".event-time-from "),
-            addEventTo = document.querySelector(".event-time-to "),
-            addEventSubmit = document.querySelector(".add-event-btn ");
+        document.addEventListener('DOMContentLoaded', function() {
+            const eventModeSelect = document.getElementById('event_mode');
+            const addressOrLinkField = document.getElementById('addressOrLinkField');
+            const addressOrLinkInput = document.getElementById('address_or_link');
+            const addressOrLinkLabel = document.getElementById('addressOrLinkLabel');
 
-        let today = new Date();
-        let activeDay;
-        let month = today.getMonth();
-        let year = today.getFullYear();
-
-        const months = [
-            "January",
-            "February",
-            "March",
-            "April",
-            "May",
-            "June",
-            "July",
-            "August",
-            "September",
-            "October",
-            "November",
-            "December",
-        ];
-
-        const eventsArr = [];
-        getEvents();
-        console.log(eventsArr);
-
-        //function to add days in days with class day and prev-date next-date on previous month and next month days and active on today
-        function initCalendar() {
-            const firstDay = new Date(year, month, 1);
-            const lastDay = new Date(year, month + 1, 0);
-            const prevLastDay = new Date(year, month, 0);
-            const prevDays = prevLastDay.getDate();
-            const lastDate = lastDay.getDate();
-            const day = firstDay.getDay();
-            const nextDays = 7 - lastDay.getDay() - 1;
-
-            date.innerHTML = months[month] + " " + year;
-
-            let days = "";
-
-            for (let x = day; x > 0; x--) {
-                days += `<div class="day prev-date">${prevDays - x + 1}</div>`;
-            }
-
-            for (let i = 1; i <= lastDate; i++) {
-                //check if event is present on that day
-                let event = false;
-                eventsArr.forEach((eventObj) => {
-                    if (
-                        eventObj.day === i &&
-                        eventObj.month === month + 1 &&
-                        eventObj.year === year
-                    ) {
-                        event = true;
-                    }
-                });
-                if (
-                    i === new Date().getDate() &&
-                    year === new Date().getFullYear() &&
-                    month === new Date().getMonth()
-                ) {
-                    activeDay = i;
-                    getActiveDay(i);
-                    updateEvents(i);
-                    if (event) {
-                        days += `<div class="day today active event">${i}</div>`;
-                    } else {
-                        days += `<div class="day today active">${i}</div>`;
-                    }
+            eventModeSelect.addEventListener('change', function() {
+                if (this.value === 'Virtual') {
+                    addressOrLinkField.style.display = 'block';
+                    addressOrLinkLabel.textContent = 'Link';
+                    addressOrLinkInput.placeholder = 'Enter link';
+                } else if (this.value === 'Physical') {
+                    addressOrLinkField.style.display = 'block';
+                    addressOrLinkLabel.textContent = 'Address';
+                    addressOrLinkInput.placeholder = 'Enter Address';
                 } else {
-                    if (event) {
-                        days += `<div class="day event">${i}</div>`;
-                    } else {
-                        days += `<div class="day ">${i}</div>`;
-                    }
-                }
-            }
-
-            for (let j = 1; j <= nextDays; j++) {
-                days += `<div class="day next-date">${j}</div>`;
-            }
-            daysContainer.innerHTML = days;
-            addListner();
-        }
-
-        //function to add month and year on prev and next button
-        function prevMonth() {
-            month--;
-            if (month < 0) {
-                month = 11;
-                year--;
-            }
-            initCalendar();
-        }
-
-        function nextMonth() {
-            month++;
-            if (month > 11) {
-                month = 0;
-                year++;
-            }
-            initCalendar();
-        }
-
-        prev.addEventListener("click", prevMonth);
-        next.addEventListener("click", nextMonth);
-
-        initCalendar();
-
-        //function to add active on day
-        function addListner() {
-            const days = document.querySelectorAll(".day");
-            days.forEach((day) => {
-                day.addEventListener("click", (e) => {
-                    getActiveDay(e.target.innerHTML);
-                    updateEvents(Number(e.target.innerHTML));
-                    activeDay = Number(e.target.innerHTML);
-                    //remove active
-                    days.forEach((day) => {
-                        day.classList.remove("active");
-                    });
-                    //if clicked prev-date or next-date switch to that month
-                    if (e.target.classList.contains("prev-date")) {
-                        prevMonth();
-                        //add active to clicked day afte month is change
-                        setTimeout(() => {
-                            //add active where no prev-date or next-date
-                            const days = document.querySelectorAll(".day");
-                            days.forEach((day) => {
-                                if (
-                                    !day.classList.contains("prev-date") &&
-                                    day.innerHTML === e.target.innerHTML
-                                ) {
-                                    day.classList.add("active");
-                                }
-                            });
-                        }, 100);
-                    } else if (e.target.classList.contains("next-date")) {
-                        nextMonth();
-                        //add active to clicked day afte month is changed
-                        setTimeout(() => {
-                            const days = document.querySelectorAll(".day");
-                            days.forEach((day) => {
-                                if (
-                                    !day.classList.contains("next-date") &&
-                                    day.innerHTML === e.target.innerHTML
-                                ) {
-                                    day.classList.add("active");
-                                }
-                            });
-                        }, 100);
-                    } else {
-                        e.target.classList.add("active");
-                    }
-                });
-            });
-        }
-
-        todayBtn.addEventListener("click", () => {
-            today = new Date();
-            month = today.getMonth();
-            year = today.getFullYear();
-            initCalendar();
-        });
-
-        dateInput.addEventListener("input", (e) => {
-            dateInput.value = dateInput.value.replace(/[^0-9/]/g, "");
-            if (dateInput.value.length === 2) {
-                dateInput.value += "/";
-            }
-            if (dateInput.value.length > 7) {
-                dateInput.value = dateInput.value.slice(0, 7);
-            }
-            if (e.inputType === "deleteContentBackward") {
-                if (dateInput.value.length === 3) {
-                    dateInput.value = dateInput.value.slice(0, 2);
-                }
-            }
-        });
-
-        gotoBtn.addEventListener("click", gotoDate);
-
-        function gotoDate() {
-            console.log("here");
-            const dateArr = dateInput.value.split("/");
-            if (dateArr.length === 2) {
-                if (dateArr[0] > 0 && dateArr[0] < 13 && dateArr[1].length === 4) {
-                    month = dateArr[0] - 1;
-                    year = dateArr[1];
-                    initCalendar();
-                    return;
-                }
-            }
-            alert("Invalid Date");
-        }
-
-        //function get active day day name and date and update eventday eventdate
-        function getActiveDay(date) {
-            const day = new Date(year, month, date);
-            const dayName = day.toString().split(" ")[0];
-            eventDay.innerHTML = dayName;
-            eventDate.innerHTML = date + " " + months[month] + " " + year;
-        }
-
-        //function update events when a day is active
-        function updateEvents(date) {
-            let events = "";
-            eventsArr.forEach((event) => {
-                if (
-                    date === event.day &&
-                    month + 1 === event.month &&
-                    year === event.year
-                ) {
-                    event.events.forEach((event) => {
-                        events += `<div class="event">
-            <div class="title">
-              <i class="fas fa-circle"></i>
-              <h3 class="event-title">${event.title}</h3>
-            </div>
-            <div class="event-time">
-              <span class="event-time">${event.time}</span>
-            </div>
-        </div>`;
-                    });
+                    addressOrLinkField.style.display = 'none';
+                    addressOrLinkInput.placeholder = ''; // Clear placeholder
                 }
             });
-            if (events === "") {
-                events = `<div class="no-event">
-            <h3>No Events</h3>
-        </div>`;
-            }
-            eventsContainer.innerHTML = events;
-            saveEvents();
-        }
-
-        //function to add event
-        addEventBtn.addEventListener("click", () => {
-            addEventWrapper.classList.toggle("active");
         });
 
-        addEventCloseBtn.addEventListener("click", () => {
-            addEventWrapper.classList.remove("active");
-        });
+        $(document).ready(function() {
+            $(document).on('submit', '#eventDetails', function(e) {
+                e.preventDefault();
 
-        document.addEventListener("click", (e) => {
-            if (e.target !== addEventBtn && !addEventWrapper.contains(e.target)) {
-                addEventWrapper.classList.remove("active");
-            }
-        });
+                let formData = new FormData(this);
 
-        //allow 50 chars in eventtitle
-        addEventTitle.addEventListener("input", (e) => {
-            addEventTitle.value = addEventTitle.value.slice(0, 60);
-        });
-
-        function defineProperty() {
-            var osccred = document.createElement("div");
-            osccred.innerHTML =
-                "A Project By <a href='https://www.youtube.com/channel/UCiUtBDVaSmMGKxg1HYeK-BQ' target=_blank>Open Source Coding</a>";
-            osccred.style.position = "absolute";
-            osccred.style.bottom = "0";
-            osccred.style.right = "0";
-            osccred.style.fontSize = "10px";
-            osccred.style.color = "#ccc";
-            osccred.style.fontFamily = "sans-serif";
-            osccred.style.padding = "5px";
-            osccred.style.background = "#fff";
-            osccred.style.borderTopLeftRadius = "5px";
-            osccred.style.borderBottomRightRadius = "5px";
-            osccred.style.boxShadow = "0 0 5px #ccc";
-            document.body.appendChild(osccred);
-        }
-
-        defineProperty();
-
-        //allow only time in eventtime from and to
-        addEventFrom.addEventListener("input", (e) => {
-            addEventFrom.value = addEventFrom.value.replace(/[^0-9:]/g, "");
-            if (addEventFrom.value.length === 2) {
-                addEventFrom.value += ":";
-            }
-            if (addEventFrom.value.length > 5) {
-                addEventFrom.value = addEventFrom.value.slice(0, 5);
-            }
-        });
-
-        addEventTo.addEventListener("input", (e) => {
-            addEventTo.value = addEventTo.value.replace(/[^0-9:]/g, "");
-            if (addEventTo.value.length === 2) {
-                addEventTo.value += ":";
-            }
-            if (addEventTo.value.length > 5) {
-                addEventTo.value = addEventTo.value.slice(0, 5);
-            }
-        });
-
-        //function to add event to eventsArr
-        addEventSubmit.addEventListener("click", () => {
-            const eventTitle = addEventTitle.value;
-            const eventTimeFrom = addEventFrom.value;
-            const eventTimeTo = addEventTo.value;
-            if (eventTitle === "" || eventTimeFrom === "" || eventTimeTo === "") {
-                alert("Please fill all the fields");
-                return;
-            }
-
-            //check correct time format 24 hour
-            const timeFromArr = eventTimeFrom.split(":");
-            const timeToArr = eventTimeTo.split(":");
-            if (
-                timeFromArr.length !== 2 ||
-                timeToArr.length !== 2 ||
-                timeFromArr[0] > 23 ||
-                timeFromArr[1] > 59 ||
-                timeToArr[0] > 23 ||
-                timeToArr[1] > 59
-            ) {
-                alert("Invalid Time Format");
-                return;
-            }
-
-            const timeFrom = convertTime(eventTimeFrom);
-            const timeTo = convertTime(eventTimeTo);
-
-            //check if event is already added
-            let eventExist = false;
-            eventsArr.forEach((event) => {
-                if (
-                    event.day === activeDay &&
-                    event.month === month + 1 &&
-                    event.year === year
-                ) {
-                    event.events.forEach((event) => {
-                        if (event.title === eventTitle) {
-                            eventExist = true;
+                sendAxiosRequest('post', '/api/events', formData, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
                         }
-                    });
-                }
-            });
-            if (eventExist) {
-                alert("Event already added");
-                return;
-            }
-            const newEvent = {
-                title: eventTitle,
-                time: timeFrom + " - " + timeTo,
-            };
-            console.log(newEvent);
-            console.log(activeDay);
-            let eventAdded = false;
-            if (eventsArr.length > 0) {
-                eventsArr.forEach((item) => {
-                    if (
-                        item.day === activeDay &&
-                        item.month === month + 1 &&
-                        item.year === year
-                    ) {
-                        item.events.push(newEvent);
-                        eventAdded = true;
-                    }
-                });
-            }
-
-            if (!eventAdded) {
-                eventsArr.push({
-                    day: activeDay,
-                    month: month + 1,
-                    year: year,
-                    events: [newEvent],
-                });
-            }
-
-            console.log(eventsArr);
-            addEventWrapper.classList.remove("active");
-            addEventTitle.value = "";
-            addEventFrom.value = "";
-            addEventTo.value = "";
-            updateEvents(activeDay);
-            //select active day and add event class if not added
-            const activeDayEl = document.querySelector(".day.active");
-            if (!activeDayEl.classList.contains("event")) {
-                activeDayEl.classList.add("event");
-            }
-        });
-
-        //function to delete event when clicked on event
-        eventsContainer.addEventListener("click", (e) => {
-            if (e.target.classList.contains("event")) {
-                if (confirm("Are you sure you want to delete this event?")) {
-                    const eventTitle = e.target.children[0].children[1].innerHTML;
-                    eventsArr.forEach((event) => {
-                        if (
-                            event.day === activeDay &&
-                            event.month === month + 1 &&
-                            event.year === year
-                        ) {
-                            event.events.forEach((item, index) => {
-                                if (item.title === eventTitle) {
-                                    event.events.splice(index, 1);
-                                }
-                            });
-                            //if no events left in a day then remove that day from eventsArr
-                            if (event.events.length === 0) {
-                                eventsArr.splice(eventsArr.indexOf(event), 1);
-                                //remove event class from day
-                                const activeDayEl = document.querySelector(".day.active");
-                                if (activeDayEl.classList.contains("event")) {
-                                    activeDayEl.classList.remove("event");
-                                }
+                    })
+                    .then(response => {
+                        if (response.data.status) {
+                            alert(response.data.message);
+                            location.reload();
+                        } else {
+                            alert(response.data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        let errorMsgs = error.response.data.errors;
+                        for (const errorMsgKey in errorMsgs) {
+                            if (errorMsgs.hasOwnProperty(errorMsgKey)) {
+                                console.log(errorMsgKey, errorMsgs[errorMsgKey]);
+                                $(`#${errorMsgKey}ErrorMsg`).html(errorMsgs[errorMsgKey].join(","));
                             }
                         }
                     });
-                    updateEvents(activeDay);
-                }
-            }
+            });
         });
-
-        //function to save events in local storage
-        function saveEvents() {
-            localStorage.setItem("events", JSON.stringify(eventsArr));
-        }
-
-        //function to get events from local storage
-        function getEvents() {
-            //check if events are already saved in local storage then return event else nothing
-            if (localStorage.getItem("events") === null) {
-                return;
-            }
-            eventsArr.push(...JSON.parse(localStorage.getItem("events")));
-        }
-
-        function convertTime(time) {
-            //convert time to 24 hour format
-            let timeArr = time.split(":");
-            let timeHour = timeArr[0];
-            let timeMin = timeArr[1];
-            let timeFormat = timeHour >= 12 ? "PM" : "AM";
-            timeHour = timeHour % 12 || 12;
-            time = timeHour + ":" + timeMin + " " + timeFormat;
-            return time;
-        }
     </script>
 @endsection

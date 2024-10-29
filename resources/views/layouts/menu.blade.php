@@ -12,7 +12,7 @@
     </a>
     <ul id="janani-moms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
         <li><a href="{{ url('api/ask-suggestion') }}"></i><span>Ask for suggestions</span></a></li>
-        <li><a href="{{ url('api/book-consult') }}"><span>Book a consult</span></a></li>
+        <li><a href="{{ url('api/book-page') }}"><span>Book a consult</span></a></li>
         <li><a href="{{ url('api/ask-doctor') }}"><span>Ask an expert</span></a></li>
         <li><a href="{{ url('api/baby-shower') }}"><span>Virtual baby shower</span></a></li>
         <li><a href="{{ url('api/introduce-yourself') }}"><span>Introduce yourself</span></a></li>
@@ -53,7 +53,7 @@
 
 <!-- Events -->
 <li class="nav-item">
-    <a class="nav-link" href="{{ url('api/events') }}">
+    <a class="nav-link" href="{{ url('api/event-page') }}">
         <i class="bi bi-calendar2-event" style="font-size: 20px;"></i><span>Events</span>
     </a>
 </li><!-- End Events -->

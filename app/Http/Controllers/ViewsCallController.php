@@ -17,4 +17,17 @@ class ViewsCallController extends Controller
     {
         return view('pages.addUserDetails');
     }
+
+    // function to call book consult page 
+    public function getBookConsult()
+    {
+        return view('pages.book-consult');
+    }
+
+    // function to call events page 
+    public function getEvents()
+    {
+        return view('pages.event');
+    }
+
 }

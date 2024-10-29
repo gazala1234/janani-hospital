@@ -173,7 +173,7 @@
             } catch (error) {
                 if (error.response && error.response.status === 401) {
                     alert('Please login to continue.');
-                    window.location.href = '/login'; // Redirect to login page
+                    window.location.href = "{{ url('/') }}"; // Redirect to login page
                 } else {
                     throw error;
                 }
@@ -214,7 +214,7 @@
                                         </h6>
                                     </div>
                                 </div>
-                                <div class="parent">
+                                <div class="parent mt-3">
                                     <div class="guest">
                                         {{ session('role') != null ? session('role') : 'Guest' }}
                                     </div>
