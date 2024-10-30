@@ -13,12 +13,12 @@
                     Personal Information
                 </a>
             </li>
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link" id="security-tab" data-bs-toggle="tab" data-bs-target="#security" role="tab"
                     aria-controls="security" aria-selected="false">
                     Security
                 </a>
-            </li>
+            </li> --}}
         </ul>
 
         <!-- Tab panes -->
@@ -74,7 +74,7 @@
                     </div>
 
                     <div class="row mb-3">
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="form-group mb-3">
                                 <label for="dob"><span class="text-danger">*</span> Date of Birth</label>
                                 <input type="date" class="form-control" id="dob" name="dob"
@@ -84,16 +84,7 @@
 
                         </div>
 
-                        <div class="col-md-4">
-                            <div class="form-group mb-3">
-                                <label for="mobile"><span class="text-danger">*</span> Phone</label>
-                                <input type="number" class="form-control" id="mobile" name="mobile"
-                                    placeholder="Enter Phone No">
-                            </div>
-                            <div id="mobileErrorMsg" class="text-danger font-weight-bold"></div>
-
-                        </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="form-group mb-3">
                                 <label for="blood_group"><span class="text-danger">*</span> Blood Group</label>
                                 <select class="form-control" id="blood_group" name="blood_group">
@@ -124,7 +115,7 @@
             </div>
 
             <!-- Security Tab -->
-            <div class="tab-pane fade" id="security" role="tabpanel" aria-labelledby="security-tab">
+            {{-- <div class="tab-pane fade" id="security" role="tabpanel" aria-labelledby="security-tab">
                 <form action="" method="POST">
                     @csrf
                     <div class="form-group my-4">
@@ -144,7 +135,7 @@
                     </div>
                     <button type="submit" class="btn btn-primary">Update Password</button>
                 </form>
-            </div>
+            </div> --}}
         </div>
     </div>
 
@@ -162,7 +153,6 @@
                 let email = $('#email').val();
                 let country = $('#country').val();
                 let dob = $('#dob').val();
-                let mobile = $('#mobile').val();
                 let blood_group = $('#blood_group').val();
                 let address = $('#address').val();
 
@@ -173,7 +163,6 @@
                     email,
                     country,
                     dob,
-                    mobile,
                     blood_group,
                     address
                 };

@@ -20,7 +20,6 @@ class UserDetails extends Model
         'email',
         'country',
         'dob',
-        'mobile',
         'blood_group',
         'address',
         'img_path',
