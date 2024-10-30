@@ -61,7 +61,6 @@ class UserDetailsController extends Controller
             'email' => 'email|unique:user_details,email',
             'country' => 'string|max:255',
             'dob' => 'required|date',
-            'mobile' => 'required|digits_between:10,15|unique:user_details,mobile',
             'blood_group' => 'required|string|max:10',
             'address' => 'string',
             'img_path' => 'nullable|string'
