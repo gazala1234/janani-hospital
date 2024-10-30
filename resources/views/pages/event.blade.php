@@ -65,13 +65,13 @@
                 <form id="eventDetails" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group my-3">
-                        <label for="event_mode"><span class="text-danger">*</span> Event Mode</label>
-                        <select class="form-control" id="event_mode" name="event_mode">
+                        <label for="mode"><span class="text-danger">*</span> Event Mode</label>
+                        <select class="form-control" id="mode" name="mode">
                             <option value="">Select Event Mode</option>
                             <option value="Virtual">Virtual</option>
                             <option value="Physical">Physical</option>
                         </select>
-                        <div id="eventModeErrorMsg" class="text-danger font-weight-bold"></div>
+                        <div id="modeErrorMsg" class="text-danger font-weight-bold"></div>
                     </div>
                     <div class="form-group mb-3" id="addressOrLinkField" style="display: none;">
                         <label id="addressOrLinkLabel" for="address_or_link"><span class="text-danger">*</span>
@@ -120,13 +120,12 @@
 
                     <!-- Image Upload Field -->
                     <div class="form-group my-3">
-                        <label for="event_image">Event Image</label>
-                        <input type="file" class="form-control" id="event_image" name="event_image"
-                            accept="image/*">
+                        <label for="img_path">Event Image</label>
+                        <input type="file" class="form-control" id="img_path" name="img_path" accept="image/*">
                     </div>
 
                     <div class="text-center">
-                        <button type="submit" class="btn btn-primary">Add Event</button>
+                        <button type="submit" class="btn btn-primary">Schedule Event</button>
                     </div>
                 </form>
             </div>
@@ -206,9 +205,11 @@
     </div>
 
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.14.0/jquery-ui.js"></script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const eventModeSelect = document.getElementById('event_mode');
+            const eventModeSelect = document.getElementById('mode');
             const addressOrLinkField = document.getElementById('addressOrLinkField');
             const addressOrLinkInput = document.getElementById('address_or_link');
             const addressOrLinkLabel = document.getElementById('addressOrLinkLabel');
@@ -224,22 +225,37 @@
                     addressOrLinkInput.placeholder = 'Enter Address';
                 } else {
                     addressOrLinkField.style.display = 'none';
-                    addressOrLinkInput.placeholder = ''; // Clear placeholder
+                    addressOrLinkInput.placeholder = ''; 
                 }
             });
         });
 
         $(document).ready(function() {
+
             $(document).on('submit', '#eventDetails', function(e) {
                 e.preventDefault();
 
-                let formData = new FormData(this);
+                let mode = $('#mode').val();
+                let address_or_link = $('#address_or_link').val();
+                let title = $('#title').val();
+                let description = $('#description').val();
+                let date = $('#date').val();
+                let start_time = $('#start_time').val();
+                let end_time = $('#end_time').val();
+                let img_path = $('#img_path').val();
 
-                sendAxiosRequest('post', '/api/events', formData, {
-                        headers: {
-                            'Content-Type': 'multipart/form-data'
-                        }
-                    })
+                let formData = {
+                    mode,
+                    address_or_link,
+                    title,
+                    description,
+                    date,
+                    start_time,
+                    end_time,
+                    img_path
+                };
+
+                sendAxiosRequest('post', '/api/events', formData)
                     .then(response => {
                         if (response.data.status) {
                             alert(response.data.message);
@@ -250,12 +266,20 @@
                     })
                     .catch(error => {
                         console.log(error);
-                        let errorMsgs = error.response.data.errors;
-                        for (const errorMsgKey in errorMsgs) {
-                            if (errorMsgs.hasOwnProperty(errorMsgKey)) {
-                                console.log(errorMsgKey, errorMsgs[errorMsgKey]);
-                                $(`#${errorMsgKey}ErrorMsg`).html(errorMsgs[errorMsgKey].join(","));
+                        if (error.response && error.response.data) {
+                            if (error.response.data.errors) {
+                                let errorMsgs = error.response.data.errors;
+                                for (const errorMsgKey in errorMsgs) {
+                                    if (errorMsgs.hasOwnProperty(errorMsgKey)) {
+                                        $(`#${errorMsgKey}ErrorMsg`).html(errorMsgs[errorMsgKey].join(
+                                            ","));
+                                    }
+                                }
+                            } else {
+                                alert(error.response.data.message);
                             }
+                        } else {
+                            alert('An unexpected error occurred. Please try again.');
                         }
                     });
             });

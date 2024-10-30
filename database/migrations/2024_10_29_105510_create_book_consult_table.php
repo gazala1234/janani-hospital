@@ -14,8 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('book_consult', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('user_id')->index(); // Add index to user_id
+            $table->id()->index();
+            $table->unsignedBigInteger('user_id')->index();
             $table->string('name');
             $table->string('email')->nullable();
             $table->string('phone');
@@ -30,9 +30,6 @@ return new class extends Migration
                   ->references('id')
                   ->on('users')
                   ->onDelete('cascade');
-
-            // Add index to id
-            $table->index('id');
         });
     }
 
