@@ -65,6 +65,13 @@ class PostsController extends Controller
         ]);
 
         try {
+            // Check if a file is included in the request
+            if ($request->hasFile('file')) {
+                // Store the file in the public directory and get the path
+                $path = $request->file('file')->store('uploads', 'public');
+                $validatedData['path'] = $path; // Set the file path in the data array
+            }
+
             $post = Posts::create($validatedData);
 
             $response = [
@@ -192,36 +199,36 @@ class PostsController extends Controller
             'data' => [],
             'message' => '',
         ];
-    
+
         try {
             $post = Posts::findOrFail($id);
             $userId = session('id');  // Retrieve user ID from session
-    
+
             if (!$userId) {
                 return response()->json(['status' => false, 'message' => 'User not authenticated'], 401);
             }
-    
+
             if ($post->likedBy($userId)) {
                 // If user already liked the post, unlike it
                 $post->likes()->where('user_id', $userId)->delete();
-    
+
                 // Decrement the likes_count column
                 $post->decrement('likes_count');
-    
+
                 $response['message'] = 'Post unliked successfully.';
             } else {
                 // If not already liked, create a like
                 $post->likes()->create(['user_id' => $userId]);
-    
+
                 // Increment the likes_count column
                 $post->increment('likes_count');
-    
+
                 $response['message'] = 'Post liked successfully.';
             }
-    
+
             $response['status'] = true;
             $response['data'] = ['likes_count' => $post->likes_count];  // Return updated likes_count directly
-    
+
             return response()->json($response, 200);
         } catch (\Exception $e) {
             $response = [
@@ -232,6 +239,4 @@ class PostsController extends Controller
             return response()->json($response, 500);
         }
     }
-    
-    
 }

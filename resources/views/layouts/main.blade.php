@@ -306,5 +306,6 @@
             });
         });
     </script>
+    @yield('js_scripts')
 
     @include('layouts.footer')

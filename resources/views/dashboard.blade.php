@@ -131,7 +131,7 @@
                                 const likeCountSpan = this.querySelector('.like-count');
                                 let currentLikes = parseInt(likeCountSpan.innerText);
                                 const isLiked = this.classList.contains(
-                                'liked'); // Check if the post is currently liked
+                                    'liked'); // Check if the post is currently liked
 
                                 // Determine request type based on like/unlike
                                 sendAxiosRequest('put', `/api/posts/${id}/like`, {})
@@ -142,12 +142,12 @@
                                                 likeCountSpan.innerText = --
                                                 currentLikes; // Decrement if already liked
                                                 this.classList.remove(
-                                                'liked'); // Remove the liked class for unlike
+                                                    'liked'); // Remove the liked class for unlike
                                             } else {
                                                 likeCountSpan.innerText = ++
                                                 currentLikes; // Increment if not liked
                                                 this.classList.add(
-                                                'liked'); // Add liked class for like
+                                                    'liked'); // Add liked class for like
                                             }
                                         }
                                     })
@@ -193,43 +193,47 @@
     <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="searchModalLabel">Posting in/ Community Feed</h5>
-                    <button type="button" class="close ms-auto" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-
-                <div class="modal-body">
-                    <!-- Toolbar for text formatting -->
-                    <div class="toolbar">
-                        <button type="button" id="boldBtn" title="Bold"><i class="fas fa-bold"></i></button>
-                        <button type="button" id="italicBtn" title="Italic"><i class="fas fa-italic"></i></button>
-                        <button type="button" id="underlineBtn" title="Underline"><i class="fas fa-underline"></i></button>
-                        <button type="button" id="listBtn" title="Bullet Points"><i class="fas fa-list-ul"></i></button>
+                <form id="addPost"> <!-- Form starts here -->
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="searchModalLabel">Posting in/ Community Feed</h5>
+                        <button type="button" class="close ms-auto" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
 
-                    <!-- Textarea for post content -->
-                    <div contenteditable="true" class="form-control mb-3" placeholder="Write here" id="postContent"
-                        style="height: 200px;"></div>
+                    <div class="modal-body">
+                        <!-- Toolbar for text formatting -->
+                        <div class="toolbar">
+                            <button type="button" id="boldBtn" title="Bold"><i class="fas fa-bold"></i></button>
+                            <button type="button" id="italicBtn" title="Italic"><i class="fas fa-italic"></i></button>
+                            <button type="button" id="underlineBtn" title="Underline"><i
+                                    class="fas fa-underline"></i></button>
+                            <button type="button" id="listBtn" title="Bullet Points"><i
+                                    class="fas fa-list-ul"></i></button>
+                        </div>
 
-                    <!-- Icons for uploading photo and video -->
-                    <div class="d-flex justify-content-around">
-                        <span class="upload-icon" title="Upload Photo" id="photoIcon">
-                            <i class="fas fa-camera"></i>
-                        </span>
-                        <span class="upload-icon" title="Upload Video" id="videoIcon">
-                            <i class="fas fa-video"></i>
-                        </span>
+                        <!-- Textarea for post content -->
+                        <div contenteditable="true" class="form-control mb-3" placeholder="Write here" id="postContent"
+                            style="height: 200px;"></div>
+
+                        <!-- Icons for uploading photo and video -->
+                        <div class="d-flex justify-content-around">
+                            <span class="upload-icon" title="Upload Photo" id="photoIcon">
+                                <i class="fas fa-camera"></i>
+                            </span>
+                            <span class="upload-icon" title="Upload Video" id="videoIcon">
+                                <i class="fas fa-video"></i>
+                            </span>
+                        </div>
+
+                        <!-- Hidden file inputs for photo and video -->
+                        <input type="file" id="photoInput" accept="image/*" style="display: none;" />
+                        <input type="file" id="videoInput" accept="video/*" style="display: none;" />
                     </div>
-
-                    <!-- Hidden file inputs for photo and video -->
-                    <input type="file" id="photoInput" accept="image/*" style="display: none;" />
-                    <input type="file" id="videoInput" accept="video/*" style="display: none;" />
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Publish Post</button>
-                </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary">Publish Post</button>
+                    </div>
+                </form> <!-- Form ends here -->
             </div>
         </div>
     </div>
@@ -360,4 +364,49 @@
         </div> --}}
 
     </div>
+@endsection
+
+@section('js_scripts')
+    <script>
+        $(document).ready(function() {
+            $(document).on('submit', '#addPost', function(e) {
+                e.preventDefault();
+
+                // Retrieve post data
+                let title = 'overview'; // Assuming a default title
+                let content = $('#postContent').text(); // Content from the editable div
+                let type = 'community_feed'; // Default type
+                let path = ''; // This will be set in the Laravel controller if a file is uploaded
+
+                // Create JSON data object
+                let formData = {
+                    title: title,
+                    content: content,
+                    type: type,
+                    path: path
+                };
+                // Check if a photo or video file is uploaded
+                let file = null;
+                if ($('#photoInput')[0].files.length > 0) {
+                    file = $('#photoInput')[0].files[0];
+                } else if ($('#videoInput')[0].files.length > 0) {
+                    file = $('#videoInput')[0].files[0];
+                }
+
+
+                sendAxiosRequest('post', '/api/user-auth', formData)
+                    .then(response => {
+                        if (response.data.status) {
+                            alert(response.data.message);
+                        } else {
+                            alert(response.data.message);
+                            response.data.status ? location.reload() : '';
+                        }
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+            });
+        });
+    </script>
 @endsection
