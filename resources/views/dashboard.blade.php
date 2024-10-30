@@ -231,7 +231,7 @@
                         <input type="file" id="videoInput" accept="video/*" style="display: none;" />
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary">Publish Post</button>
+                        <button type="submit" class="btn btn-primary">Publish Post</button>
                     </div>
                 </form> <!-- Form ends here -->
             </div>
@@ -394,10 +394,11 @@
                 }
 
 
-                sendAxiosRequest('post', '/api/user-auth', formData)
+                sendAxiosRequest('post', '/api/posts', formData)
                     .then(response => {
                         if (response.data.status) {
                             alert(response.data.message);
+                            response.data.status ? location.reload() : '';
                         } else {
                             alert(response.data.message);
                             response.data.status ? location.reload() : '';

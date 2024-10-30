@@ -55,7 +55,7 @@ class PostsController extends Controller
         ];
 
         $validatedData = $request->validate([
-            'user_id' => 'required|exists:users,id',
+            // 'user_id' => 'required|exists:users,id',
             'title' => 'required|string|max:255',
             'content' => 'required|string',
             'path' => 'nullable|string',
@@ -65,6 +65,8 @@ class PostsController extends Controller
         ]);
 
         try {
+            $userId = session('id');
+            $validatedData['user_id'] = $userId;
             // Check if a file is included in the request
             if ($request->hasFile('file')) {
                 // Store the file in the public directory and get the path
